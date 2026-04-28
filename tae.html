@@ -1,0 +1,1050 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title lang="zh">AI时间管理产品与价值对齐研究（TAE框架）— Kimberly Shao</title>
+  <title lang="en">AI Time Management & Value Alignment (TAE Framework) — Kimberly Shao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --surface: #efede6;
+      --border: #dedad0;
+      --text: #2a2620;
+      --muted: #7a756c;
+      --accent: #3d3830;
+      --metric: #1a1612;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    body.en { font-family: 'Noto Sans SC', sans-serif; }
+
+    body.zh .lang-en { display: none; }
+    body.en .lang-zh { display: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 52px;
+    }
+
+    .nav-back {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .lang-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 3px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-toggle button.active {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* ── Layout ── */
+    .page-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 52px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--metric);
+      margin-bottom: 20px;
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+    .hero-meta span { display: flex; align-items: center; gap: 6px; }
+
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 600px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: var(--metric);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+    }
+
+    /* ── Section ── */
+    .section {
+      margin-bottom: 52px;
+    }
+    .section-heading {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      margin-bottom: 20px;
+    }
+
+    h2.body-heading {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 12px;
+      line-height: 1.3;
+    }
+
+    p.body-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+
+    .pull-quote {
+      border-left: 3px solid var(--border);
+      margin: 24px 0;
+      padding: 12px 0 12px 20px;
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 19px;
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1.5;
+    }
+
+    /* ── SVG Diagram ── */
+    .diagram-wrap {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px 16px 20px;
+      margin: 24px 0;
+      overflow-x: auto;
+    }
+    .diagram-wrap svg {
+      display: block;
+      margin: 0 auto;
+      max-width: 100%;
+    }
+
+    /* ── Cards ── */
+    .cards-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 640px) { .cards-3 { grid-template-columns: 1fr; } }
+
+    .cards-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 560px) { .cards-2 { grid-template-columns: 1fr; } }
+
+    .tae-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 16px;
+    }
+    .tae-card-label {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .tae-card-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 17px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 8px;
+    }
+    .tae-card-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .phase-card {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 16px;
+    }
+    .phase-card-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 400;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .phase-card-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 6px;
+    }
+    .phase-card-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .loop-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+    }
+    .loop-card-title {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .loop-card-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Metrics ── */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin: 20px 0;
+    }
+    @media (max-width: 500px) { .metrics-row { grid-template-columns: 1fr; } }
+
+    .metric-highlight {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 16px;
+      text-align: center;
+    }
+    .metric-highlight .num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 36px;
+      font-weight: 600;
+      color: var(--metric);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .metric-highlight .desc {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+
+    /* ── Participant Profiles ── */
+    .profiles-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 20px 0;
+    }
+    @media (max-width: 560px) { .profiles-grid { grid-template-columns: 1fr; } }
+
+    .profile-card {
+      border-radius: 10px;
+      padding: 16px;
+      font-size: 13px;
+      line-height: 1.55;
+    }
+    .profile-amber { background: #fef9ec; border: 1px solid #f3d98b; }
+    .profile-blue  { background: #eff6ff; border: 1px solid #bfdbfe; }
+    .profile-gray  { background: var(--surface); border: 1px solid var(--border); }
+
+    .profile-card .profile-name {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 4px;
+    }
+    .profile-card .profile-role {
+      font-size: 11px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+    .profile-card .profile-quote {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    /* ── Principles list ── */
+    .principles-list {
+      list-style: none;
+      margin: 16px 0;
+    }
+    .principle-item {
+      display: flex;
+      gap: 14px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .principle-item:last-child { border-bottom: none; }
+    .principle-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--border);
+      flex-shrink: 0;
+      width: 28px;
+      padding-top: 1px;
+    }
+    .principle-content { flex: 1; }
+    .principle-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 4px;
+    }
+    .principle-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── Dash list ── */
+    .dash-list {
+      list-style: none;
+      margin: 12px 0;
+    }
+    .dash-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.65;
+      padding: 4px 0;
+    }
+    .dash-list li::before {
+      content: '—';
+      color: var(--muted);
+      flex-shrink: 0;
+    }
+
+    /* ── Next card ── */
+    .next-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .next-card:hover { border-color: var(--accent); }
+    .next-card-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .next-card-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--metric);
+    }
+    .next-card-arrow {
+      font-size: 22px;
+      color: var(--muted);
+    }
+
+    /* ── My Take ── */
+    .my-take {
+      border-left: 2px solid var(--border);
+      padding-left: 1.5rem;
+      margin-top: 20px;
+    }
+    .my-take-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .my-take p {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Tag pills ── */
+    .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 16px 0; }
+    .tag-pill {
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+  </style>
+</head>
+<body class="en">
+
+<!-- ── Navigation ── -->
+<nav>
+  <a class="nav-back" href="index.html">
+    <span class="lang-zh">← Kimberly Shao</span>
+    <span class="lang-en">← Kimberly Shao</span>
+  </a>
+  <div class="lang-toggle">
+    <button id="btn-zh" class="active" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-eyebrow lang-zh">AI产品研究 · UX Research · CHI 2026 投稿中</div>
+    <div class="hero-eyebrow lang-en">AI Product · UX Research · Under submission · CHI 2026</div>
+
+    <h1 class="hero-title lang-zh">AI时间管理产品与<br>价值对齐研究（TAE框架）</h1>
+    <h1 class="hero-title lang-en">AI Time Management &amp;<br>Value Alignment (TAE Framework)</h1>
+
+    <div class="hero-meta">
+      <span>
+        <span class="lang-zh">⏱ 2025.05 – 2025.10</span>
+        <span class="lang-en">⏱ May – Oct 2025</span>
+      </span>
+      <span>
+        <span class="lang-zh">🏛 清华大学 Pervasive HCI Lab</span>
+        <span class="lang-en">🏛 Tsinghua Pervasive HCI Lab</span>
+      </span>
+      <span>
+        <span class="lang-zh">👤 产品策略研究员</span>
+        <span class="lang-en">👤 Product Strategy Researcher</span>
+      </span>
+    </div>
+
+    <div class="tag-row">
+      <span class="tag-pill">Python</span>
+      <span class="tag-pill">Figma</span>
+      <span class="tag-pill">Wizard-of-Oz</span>
+      <span class="tag-pill">Qualitative Coding</span>
+      <span class="tag-pill">Mixed Methods</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-number">22</div>
+        <div class="stat-label lang-zh">研究参与者</div>
+        <div class="stat-label lang-en">Participants</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">0.82</div>
+        <div class="stat-label lang-zh">编码一致性 κ</div>
+        <div class="stat-label lang-en">Cohen's κ</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">3</div>
+        <div class="stat-label lang-zh">框架层级</div>
+        <div class="stat-label lang-en">Framework Layers</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">2</div>
+        <div class="stat-label lang-zh">研究阶段</div>
+        <div class="stat-label lang-en">Study Phases</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 01 Problem ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">01 · 问题背景</div>
+    <div class="section-heading lang-en">01 · Problem Space</div>
+
+    <h2 class="body-heading lang-zh">效率≠价值：现有AI时间管理工具的核心盲区</h2>
+    <h2 class="body-heading lang-en">Efficiency ≠ Values: The Blind Spot in AI Scheduling</h2>
+
+    <p class="body-text lang-zh">
+      AI日程助手（Google Calendar AI、Reclaim.ai、Motion等）以最大化任务完成率为核心目标，却系统性地忽视了一个根本问题：人们如何判断时间花得"值不值"，与算法优化的"完成率"之间存在深刻断裂。
+    </p>
+    <p class="body-text lang-en">
+      AI scheduling assistants (Google Calendar AI, Reclaim.ai, Motion) optimize for task completion rates while systematically overlooking a fundamental question: how people judge whether their time was well-spent diverges deeply from algorithmic throughput.
+    </p>
+
+    <p class="body-text lang-zh">
+      通过竞品分析与12人访谈，我们识别出三类核心矛盾：工具将所有任务等价量化，导致高价值活动被低优先级压缩；自动重排削弱用户对日程的主控感；系统缺乏对个人时间观与长期目标的感知能力。
+    </p>
+    <p class="body-text lang-en">
+      Through competitive analysis and 12 interviews, we identified three core tensions: tools treat all tasks as equivalent, causing high-value activities to get squeezed; auto-rescheduling erodes users' sense of ownership; systems lack awareness of personal time values and long-term goals.
+    </p>
+
+    <div class="pull-quote lang-zh">
+      "它帮我把所有事情都排进去了，但排完之后我感觉整天都不是我的。"<br>
+      <span style="font-size:14px; font-style:normal; color:var(--muted)">— 访谈参与者 P7</span>
+    </div>
+    <div class="pull-quote lang-en">
+      "It fit everything into my calendar, but afterwards the whole day felt like it wasn't mine."<br>
+      <span style="font-size:14px; font-style:normal; color:var(--muted)">— Interview participant P7</span>
+    </div>
+
+    <div class="my-take">
+      <div class="my-take-label lang-zh">我的思考和启发</div>
+      <div class="my-take-label lang-en">My take</div>
+      <p class="lang-zh">构建检测层最难的地方不是检测行为本身，而是基准线本身就可能是不可靠的。我们用 Schwartz 价值量表来确定用户"真正在乎什么"，但人们在问卷里的答案反映的是他们认为自己应该在乎什么，不一定是驱动他们实际决策的东西。因此，我们系统识别出的部分"偏差"，其实建立在一个不稳固的基线之上。我们的解法是把价值建模变成一个持续过程——不是一次性的新手引导问卷，而是AI在每次交互中不断更新的动态模型。初始问卷很重要，但它是起始假设，不是事实。</p>
+      <p class="lang-en">The hardest part of building the Detection Layer isn't detecting behavior — it's that the baseline itself is unreliable. We used the Schwartz Value Survey to establish what users 'truly value,' but people's survey answers reflect what they think they should value, not necessarily what drives their actual decisions. So some of what our system flagged as 'misalignment' was built on a shaky foundation. Our response was to treat value modeling as a continuous process — not a one-time onboarding questionnaire, but something the AI updates through every interaction. The initial survey matters, but it's a starting hypothesis, not ground truth.</p>
+    </div>
+  </section>
+
+  <!-- ── 02 Framework ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">02 · TAE框架</div>
+    <div class="section-heading lang-en">02 · The TAE Framework</div>
+
+    <h2 class="body-heading lang-zh">时间自主性赋能的三层架构</h2>
+    <h2 class="body-heading lang-en">A Three-Layer Architecture for Temporal Agency Empowerment</h2>
+
+    <p class="body-text lang-zh">
+      TAE（Temporal Agency Empowerment）框架提出：AI时间管理系统应从"替人决策"转向"增强自主性"。框架将用户的时间体验拆解为三个可干预层级，形成感知—反思—行动的闭环。
+    </p>
+    <p class="body-text lang-en">
+      The TAE (Temporal Agency Empowerment) framework argues that AI time-management systems should shift from "deciding for users" to "augmenting autonomy." The framework decomposes temporal experience into three intervenable layers forming a detect–reflect–act loop.
+    </p>
+
+    <!-- SVG diagram -->
+    <div class="diagram-wrap">
+      <svg viewBox="0 0 760 210" width="760" height="210" xmlns="http://www.w3.org/2000/svg" aria-label="TAE Framework diagram">
+        <defs>
+          <marker id="arrowR" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L0,6 L8,3 z" fill="#9ca3af" />
+          </marker>
+          <marker id="arrowU" markerWidth="8" markerHeight="8" refX="3" refY="0" orient="auto">
+            <path d="M0,8 L6,8 L3,0 z" fill="#9ca3af" />
+          </marker>
+        </defs>
+
+        <!-- Input node -->
+        <rect x="2" y="64" width="132" height="72" rx="10" fill="#fef9ec" stroke="#f3d98b" stroke-width="1.5"/>
+        <text x="68" y="96" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="10" fill="#92400e">
+          <tspan x="68" dy="0">Temporal-Value</tspan>
+          <tspan x="68" dy="14">Misalignment</tspan>
+          <tspan x="68" dy="13" font-size="9" fill="#b45309">时间–价值错位</tspan>
+        </text>
+
+        <!-- Arrow: input → framework -->
+        <line x1="134" y1="100" x2="148" y2="100" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arrowR)"/>
+
+        <!-- Framework group box -->
+        <rect x="150" y="20" width="420" height="140" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="1.5" stroke-dasharray="6,3"/>
+        <text x="360" y="11" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="9" letter-spacing="2" fill="#93c5fd">TAE FRAMEWORK</text>
+
+        <!-- Detection Layer -->
+        <rect x="160" y="48" width="120" height="74" rx="8" fill="#dbeafe" stroke="#93c5fd" stroke-width="1.2"/>
+        <text x="220" y="76" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="10" fill="#1d4ed8">
+          <tspan x="220" dy="0" font-weight="500">Detection</tspan>
+          <tspan x="220" dy="14">感知层</tspan>
+          <tspan x="220" dy="15" font-size="9" fill="#3b82f6">Value elicitation</tspan>
+          <tspan x="220" dy="12" font-size="9" fill="#3b82f6">价值感知</tspan>
+        </text>
+
+        <!-- Arrow: detection → reflection -->
+        <line x1="280" y1="85" x2="296" y2="85" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arrowR)"/>
+
+        <!-- Reflection Layer -->
+        <rect x="298" y="48" width="120" height="74" rx="8" fill="#e0e7ff" stroke="#a5b4fc" stroke-width="1.2"/>
+        <text x="358" y="76" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="10" fill="#3730a3">
+          <tspan x="358" dy="0" font-weight="500">Reflection</tspan>
+          <tspan x="358" dy="14">反思层</tspan>
+          <tspan x="358" dy="15" font-size="9" fill="#6366f1">Friction &amp; prompts</tspan>
+          <tspan x="358" dy="12" font-size="9" fill="#6366f1">摩擦感知</tspan>
+        </text>
+
+        <!-- Arrow: reflection → agency -->
+        <line x1="418" y1="85" x2="434" y2="85" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arrowR)"/>
+
+        <!-- Agency Layer -->
+        <rect x="436" y="48" width="120" height="74" rx="8" fill="#dcfce7" stroke="#86efac" stroke-width="1.2"/>
+        <text x="496" y="76" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="10" fill="#166534">
+          <tspan x="496" dy="0" font-weight="500">Agency</tspan>
+          <tspan x="496" dy="14">行动层</tspan>
+          <tspan x="496" dy="15" font-size="9" fill="#22c55e">Adaptive control</tspan>
+          <tspan x="496" dy="12" font-size="9" fill="#22c55e">自适应控制</tspan>
+        </text>
+
+        <!-- Arrow: framework → output -->
+        <line x1="570" y1="100" x2="586" y2="100" stroke="#9ca3af" stroke-width="1.5" marker-end="url(#arrowR)"/>
+
+        <!-- Output node -->
+        <rect x="588" y="64" width="164" height="72" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.5"/>
+        <text x="670" y="96" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="10" fill="#166534">
+          <tspan x="670" dy="0">Empowered Temporal</tspan>
+          <tspan x="670" dy="14">Agency</tspan>
+          <tspan x="670" dy="13" font-size="9" fill="#4ade80">时间自主性赋能</tspan>
+        </text>
+
+        <!-- Feedback arc -->
+        <path d="M 670 136 L 670 182 L 68 182 L 68 136" fill="none" stroke="#9ca3af" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowU)"/>
+        <text x="369" y="198" text-anchor="middle" font-family="Noto Sans SC, sans-serif" font-size="9" fill="#9ca3af">New temporal data · 新时间行为数据</text>
+      </svg>
+    </div>
+
+    <div class="cards-3" style="margin-top:20px">
+      <div class="tae-card">
+        <div class="tae-card-label lang-zh">第一层</div>
+        <div class="tae-card-label lang-en">Layer 1</div>
+        <div class="tae-card-title lang-zh">感知层 Detection</div>
+        <div class="tae-card-title lang-en">Detection Layer</div>
+        <div class="tae-card-body lang-zh">通过对话与行为数据，持续更新用户的时间价值模型——哪些活动"值得"，哪些让人后悔。</div>
+        <div class="tae-card-body lang-en">Continuously updates a model of the user's time values via conversation and behavioral signals — which activities feel worthwhile vs. regretted.</div>
+      </div>
+      <div class="tae-card">
+        <div class="tae-card-label lang-zh">第二层</div>
+        <div class="tae-card-label lang-en">Layer 2</div>
+        <div class="tae-card-title lang-zh">反思层 Reflection</div>
+        <div class="tae-card-title lang-en">Reflection Layer</div>
+        <div class="tae-card-body lang-zh">在关键决策点引入有意义的"摩擦"，通过提问而非命令触发用户的元认知反思。</div>
+        <div class="tae-card-body lang-en">Introduces meaningful friction at key decision points — prompting metacognitive reflection through questions rather than commands.</div>
+      </div>
+      <div class="tae-card">
+        <div class="tae-card-label lang-zh">第三层</div>
+        <div class="tae-card-label lang-en">Layer 3</div>
+        <div class="tae-card-title lang-zh">行动层 Agency</div>
+        <div class="tae-card-title lang-en">Agency Layer</div>
+        <div class="tae-card-body lang-zh">将用户的反思转化为可执行的日程调整，并学习边界——何时该推动，何时保持沉默。</div>
+        <div class="tae-card-body lang-en">Translates reflection into actionable schedule adjustments and learns boundaries — when to nudge, when to stay silent.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 Research Method ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">03 · 研究方法</div>
+    <div class="section-heading lang-en">03 · Research Method</div>
+
+    <h2 class="body-heading lang-zh">两阶段混合研究设计</h2>
+    <h2 class="body-heading lang-en">Two-Phase Mixed-Methods Design</h2>
+
+    <div class="cards-2" style="margin-top:16px">
+      <div class="phase-card">
+        <div class="phase-card-num">01</div>
+        <div class="phase-card-title lang-zh">形成性访谈阶段 · N=12</div>
+        <div class="phase-card-title lang-en">Formative Interviews · N=12</div>
+        <div class="phase-card-body lang-zh">
+          半结构化深度访谈，探索用户对AI日程工具的现有使用模式、痛点与期望。采用主题分析编码（两位研究者独立编码，Cohen's κ=0.82），识别出"价值错位"、"主控感丧失"、"目标感缺失"三类核心主题。
+        </div>
+        <div class="phase-card-body lang-en">
+          Semi-structured in-depth interviews exploring existing patterns, pain points, and expectations with AI scheduling tools. Thematic analysis with two independent coders (Cohen's κ=0.82) surfaced three core themes: value misalignment, loss of ownership, and absent goal-awareness.
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-card-num">02</div>
+        <div class="phase-card-title lang-zh">Wizard-of-Oz干预实验 · N=10</div>
+        <div class="phase-card-title lang-en">Wizard-of-Oz Experiment · N=10</div>
+        <div class="phase-card-body lang-zh">
+          模拟TAE框架三层干预的AI日程助手，由研究者实时扮演系统响应。参与者使用原型7天，通过ESM日志与出口访谈评估干预效果。实验前后对比时间自主性感知量表（6项，Likert 7分）。
+        </div>
+        <div class="phase-card-body lang-en">
+          Simulated a TAE-compliant AI assistant with a researcher playing the system in real time (Wizard-of-Oz). Participants used the prototype for 7 days; ESM logs and exit interviews assessed intervention quality. Pre/post comparison on a 6-item temporal agency scale (Likert 7-point).
+        </div>
+      </div>
+    </div>
+
+    <p class="body-text lang-zh" style="margin-top:20px">
+      Wizard-of-Oz方法允许我们在技术实现之前验证框架的核心假设：用户是否真的需要"反思摩擦"，还是会感到烦扰？这一设计决策帮助我们在高保真原型阶段大幅缩小了功能迭代范围。
+    </p>
+    <p class="body-text lang-en" style="margin-top:20px">
+      The Wizard-of-Oz method let us validate the framework's core hypothesis before any technical implementation: do users actually want "reflective friction," or does it feel annoying? This design decision dramatically narrowed the feature iteration scope at the hi-fi prototype stage.
+    </p>
+
+    <div style="margin-top:28px">
+      <div class="section-heading lang-zh" style="margin-bottom:16px">每日交互循环</div>
+      <div class="section-heading lang-en" style="margin-bottom:16px">The Daily Interaction Loop</div>
+      <div class="cards-3">
+        <div class="loop-card" style="border-left:3px solid #f59e0b">
+          <div class="loop-card-title lang-zh">🌅 晨间 · 检测</div>
+          <div class="loop-card-title lang-en">🌅 Morning · Detection</div>
+          <div class="loop-card-body lang-zh">将当日日程与参与者的声明价值观和长期目标关联，在调整仍可能时尽早识别潜在的价值-行为偏差。</div>
+          <div class="loop-card-body lang-en">Connected the day's schedule to participants' stated values and longer-term goals, surfacing potential value–behavior divergences early when adjustments were still possible.</div>
+        </div>
+        <div class="loop-card" style="border-left:3px solid #60a5fa">
+          <div class="loop-card-title lang-zh">☀️ 日间 · 反思</div>
+          <div class="loop-card-title lang-en">☀️ Daytime · Reflection</div>
+          <div class="loop-card-body lang-zh">在决策时刻（任务切换、能量低谷、突发变化）触发简短情境感知提示，帮助参与者以最低认知负担厘清取舍、做出价值对齐的选择。</div>
+          <div class="loop-card-body lang-en">Short, context-aware prompts at decision moments — task switching, energy dips, unexpected changes — helped participants articulate trade-offs and choose value-aligned actions with minimal cognitive burden.</div>
+        </div>
+        <div class="loop-card" style="border-left:3px solid #4ade80">
+          <div class="loop-card-title lang-zh">🌙 晚间 · 自主</div>
+          <div class="loop-card-title lang-en">🌙 Evening · Agency</div>
+          <div class="loop-card-body lang-zh">引导以意义为导向的总结反思，逐步从结构化引导转向用户自主发起。每周总结梳理规律，帮助参与者重新协商次日/次周计划。</div>
+          <div class="loop-card-body lang-en">Guided meaning-focused reflection and gradually shifted from structured guidance to user-initiated control. Weekly wrap-ups summarized patterns and helped participants renegotiate plans for the next day/week.</div>
+        </div>
+      </div>
+
+      <div class="my-take">
+        <div class="my-take-label lang-zh">产品视角</div>
+        <div class="my-take-label lang-en">My take</div>
+        <p class="lang-zh">用微信模拟AI引入了一个无法完全消除的干扰变量：参与者知道对面是人，这激活了社交规范——他们回复更礼貌、不想忽略消息、不愿意"让AI失望"。真实部署的系统不会触发这种社交契约。这意味着我们的参与度和配合度数据可能是乐观的。真正的留存挑战在新鲜感消退之后才开始。</p>
+        <p class="lang-en">Using WeChat to simulate an AI introduced a confound we couldn't fully eliminate: participants knew they were talking to humans, which activates social norms — they replied more politely, felt reluctant to ignore messages, didn't want to 'let the AI down.' A real deployed system won't trigger that social contract. This means our engagement and compliance numbers are likely optimistic. The real retention challenge begins after the novelty wears off.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 04 Participants ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">04 · 参与者画像</div>
+    <div class="section-heading lang-en">04 · Participant Profiles</div>
+
+    <h2 class="body-heading lang-zh">谁从中受益最多——以及这对产品设计的启示</h2>
+    <h2 class="body-heading lang-en">Who benefits most — and what that tells us about product design</h2>
+
+    <p class="body-text lang-zh">
+      研究揭示了三类效果存在显著差异的用户画像。这不是研究局限，而是核心产品洞察：有效的价值对齐支持必须匹配用户现有的元认知能力（指个人对自身思维和规划习惯进行反思与调整的能力），而非套用统一方案。
+    </p>
+    <p class="body-text lang-en">
+      The study revealed three user profiles with meaningfully different outcomes. This isn't a research limitation — it's a core product insight: effective value-alignment support must match users' existing metacognitive capabilities (the ability to reflect on and regulate one's own thinking and planning habits), not apply a universal approach.
+    </p>
+
+    <div class="profiles-grid">
+      <div class="profile-card profile-amber">
+        <div style="font-size:11px; letter-spacing:0.08em; color:#b45309; margin-bottom:6px">40% · 4/10</div>
+        <div class="profile-name lang-zh">发展就绪型</div>
+        <div class="profile-name lang-en">Developmental-Ready</div>
+        <ul class="dash-list" style="margin:8px 0 10px">
+          <li class="lang-zh">已有周度反思习惯</li>
+          <li class="lang-zh">能清晰表达2-3个优先级</li>
+          <li class="lang-zh">经历渐进式偏差而非危机式偏差</li>
+          <li class="lang-en">Already practiced weekly reflection</li>
+          <li class="lang-en">Articulated 2–3 clear priorities</li>
+          <li class="lang-en">Experienced gradual misalignment, not crisis-level</li>
+        </ul>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6" class="lang-zh">→ 最适合早期MVP的目标用户。这类用户改善最显著，也最可能持续使用产品并提供有价值的迭代反馈。</div>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6" class="lang-en">→ Best fit for early MVP. These users showed the strongest improvements and are most likely to stick with the product long enough to give meaningful feedback.</div>
+      </div>
+
+      <div class="profile-card profile-blue">
+        <div style="font-size:11px; letter-spacing:0.08em; color:#1d4ed8; margin-bottom:6px">30% · 3/10</div>
+        <div class="profile-name lang-zh">结构寻求型</div>
+        <div class="profile-name lang-en">Structure-Seeking</div>
+        <ul class="dash-list" style="margin:8px 0 10px">
+          <li class="lang-zh">被开放式反思压倒</li>
+          <li class="lang-zh">偏好直接指令</li>
+          <li class="lang-zh">高压执行阶段将反思提示视为噪音</li>
+          <li class="lang-en">Overwhelmed by open-ended reflection</li>
+          <li class="lang-en">Preferred direct guidance</li>
+          <li class="lang-en">Experienced prompts as noise during high-stress execution</li>
+        </ul>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6" class="lang-zh">→ 先给答案，再提问题。这类用户需要先看到具体建议，再进入开放反思——提示应该从"我注意到这个"开始，而不是"你觉得这周怎么样？"</div>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6" class="lang-en">→ Give the answer first, then ask the question. This profile needs concrete suggestions before open reflection — prompts that start with 'here's what I noticed' rather than 'how do you feel about your week?'</div>
+      </div>
+
+      <div class="profile-card profile-gray">
+        <div style="font-size:11px; letter-spacing:0.08em; color:var(--muted); margin-bottom:6px">30% · 3/10</div>
+        <div class="profile-name lang-zh">情境约束型</div>
+        <div class="profile-name lang-en">Context-Constrained</div>
+        <ul class="dash-list" style="margin:8px 0 10px">
+          <li class="lang-zh">受外部义务深度约束</li>
+          <li class="lang-zh">简化框架无法捕捉其价值取舍的复杂性</li>
+          <li class="lang-en">Heavily constrained by external obligations</li>
+          <li class="lang-en">Simplified frameworks couldn't capture value trade-off complexity</li>
+        </ul>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6" class="lang-zh">→ 框架目前的盲区。当一个人的时间安排被外部义务（家庭、照料、固定工时）深度约束时，一个围绕个人价值选择设计的系统能发挥的作用就很有限。解决这个问题，需要AI理解社会情境，而不只是个人偏好。</div>
+        <div style="font-size:13px; color:var(--muted); line-height:1.6" class="lang-en">→ The framework's current blind spot. When someone's schedule is heavily shaped by external obligations — family, caregiving, rigid work hours — a system built around personal value choices has limited reach. Solving this requires the AI to understand social context, not just individual preferences.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 Findings ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">05 · 关键发现</div>
+    <div class="section-heading lang-en">05 · Key Findings</div>
+
+    <h2 class="body-heading lang-zh">三层架构的可行性与边界</h2>
+    <h2 class="body-heading lang-en">Feasibility and Boundaries of the Three-Layer Architecture</h2>
+
+    <div class="metrics-row">
+      <div class="metric-highlight">
+        <div class="num">0.82</div>
+        <div class="desc lang-zh">编码一致性 κ<br>两位研究者独立编码</div>
+        <div class="desc lang-en">Inter-rater reliability<br>two independent coders</div>
+      </div>
+      <div class="metric-highlight">
+        <div class="num">+31%</div>
+        <div class="desc lang-zh">时间自主性感知<br>实验前后量表对比</div>
+        <div class="desc lang-en">Temporal agency score<br>pre vs. post experiment</div>
+      </div>
+      <div class="metric-highlight">
+        <div class="num">8/10</div>
+        <div class="desc lang-zh">参与者认为反思摩擦<br>"有帮助"或"很有帮助"</div>
+        <div class="desc lang-en">Participants rated reflective<br>friction as helpful or very helpful</div>
+      </div>
+    </div>
+
+    <p class="body-text lang-zh">
+      实验结果验证了框架的核心假设：适度的"摩擦感"并不会降低系统可用性，反而增强了用户对时间分配的主控感。但同时揭示了重要边界：当用户处于高压状态时，反思提示会被感知为负担；个性化"摩擦阈值"是下一步产品设计的核心问题。
+    </p>
+    <p class="body-text lang-en">
+      Results validated the core hypothesis: moderate "friction" does not reduce usability — it enhances perceived ownership of time allocation. But they also revealed an important boundary: when users are under high stress, reflective prompts feel like a burden. Personalizing the "friction threshold" is the central next-step design question.
+    </p>
+
+    <ul class="dash-list lang-zh">
+      <li>感知层（Detection）接受度最高：用户愿意主动提供价值偏好，尤其在入职引导阶段</li>
+      <li>反思层（Reflection）效果因人而异：高自我调节能力用户获益显著，低自我调节者易产生焦虑</li>
+      <li>行动层（Agency）需要更细粒度的控制权设计：用户希望"建议"而非"执行"</li>
+      <li>反馈闭环是三层架构发挥效果的关键——没有新数据输入，感知层模型会快速过时</li>
+    </ul>
+    <ul class="dash-list lang-en">
+      <li>Detection layer had the highest acceptance: users willingly provided value preferences, especially during onboarding</li>
+      <li>Reflection layer varied by individual: high self-regulation users benefited markedly; low self-regulators risked anxiety</li>
+      <li>Agency layer requires finer-grained control: users wanted "suggestions," not "execution"</li>
+      <li>The feedback loop is critical — without fresh behavioral data, the detection model goes stale quickly</li>
+    </ul>
+  </section>
+
+  <!-- ── 06 Design Principles ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">06 · 设计原则</div>
+    <div class="section-heading lang-en">06 · Design Principles</div>
+
+    <h2 class="body-heading lang-zh">从研究到产品的五条设计主张</h2>
+    <h2 class="body-heading lang-en">Five Design Claims from Research to Product</h2>
+
+    <ul class="principles-list">
+      <li class="principle-item">
+        <span class="principle-num">1</span>
+        <div class="principle-content">
+          <div class="principle-title lang-zh">价值优先于任务</div>
+          <div class="principle-title lang-en">Values before tasks</div>
+          <div class="principle-body lang-zh">AI系统应先建立用户的时间价值模型，再进行任务优先级排序。任务完成率不等于时间质量。</div>
+          <div class="principle-body lang-en">AI systems should establish the user's time-value model before ranking tasks. Task completion rate ≠ time quality.</div>
+        </div>
+      </li>
+      <li class="principle-item">
+        <span class="principle-num">2</span>
+        <div class="principle-content">
+          <div class="principle-title lang-zh">有意义的摩擦</div>
+          <div class="principle-title lang-en">Meaningful friction</div>
+          <div class="principle-body lang-zh">在关键决策节点引入低成本的反思提示，而非全程无摩擦。顺畅不等于有效。</div>
+          <div class="principle-body lang-en">Introduce low-cost reflective prompts at key decision nodes, not frictionless automation throughout. Smooth ≠ effective.</div>
+        </div>
+      </li>
+      <li class="principle-item">
+        <span class="principle-num">3</span>
+        <div class="principle-content">
+          <div class="principle-title lang-zh">建议而非决策</div>
+          <div class="principle-title lang-en">Suggest, don't decide</div>
+          <div class="principle-body lang-zh">AI应保留用户的最终决策权。自动执行必须有清晰的撤销路径和透明的执行逻辑。</div>
+          <div class="principle-body lang-en">AI must preserve the user's final decision authority. Automation needs a clear undo path and transparent execution logic.</div>
+        </div>
+      </li>
+      <li class="principle-item">
+        <span class="principle-num">4</span>
+        <div class="principle-content">
+          <div class="principle-title lang-zh">情境感知的干预时机</div>
+          <div class="principle-title lang-en">Context-aware intervention timing</div>
+          <div class="principle-body lang-zh">相同的反思提示在不同压力状态下效果截然不同。系统需要感知用户的认知负荷，动态调整干预密度。</div>
+          <div class="principle-body lang-en">The same reflective prompt has opposite effects under different stress states. Systems must sense cognitive load and dynamically adjust intervention density.</div>
+        </div>
+      </li>
+      <li class="principle-item">
+        <span class="principle-num">5</span>
+        <div class="principle-content">
+          <div class="principle-title lang-zh">持续学习的价值模型</div>
+          <div class="principle-title lang-en">Continuously learning value model</div>
+          <div class="principle-body lang-zh">用户的时间价值观会随生活阶段变化。AI系统必须建立反馈闭环，定期更新价值感知模型，防止过时。</div>
+          <div class="principle-body lang-en">Users' time values shift across life stages. AI systems must build a feedback loop to periodically refresh the value perception model and prevent staleness.</div>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── 07 Deliverables ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">07 · 产品交付物</div>
+    <div class="section-heading lang-en">07 · Deliverables</div>
+
+    <h2 class="body-heading lang-zh">从研究到产品的完整落地路径</h2>
+    <h2 class="body-heading lang-en">From Research to Product: Full Delivery Pipeline</h2>
+
+    <div class="cards-3" style="margin-top:16px">
+      <div class="loop-card">
+        <div class="loop-card-title lang-zh">高保真原型</div>
+        <div class="loop-card-title lang-en">Hi-Fi Prototype</div>
+        <div class="loop-card-body lang-zh">Figma，覆盖三层架构的核心交互流程，包含日程主视图、价值引导对话、反思卡片与行动建议四个模块。</div>
+        <div class="loop-card-body lang-en">Figma prototype covering core flows for all three layers — main calendar view, value elicitation dialogue, reflection cards, and action suggestions.</div>
+      </div>
+      <div class="loop-card">
+        <div class="loop-card-title lang-zh">完整PRD</div>
+        <div class="loop-card-title lang-en">Full PRD</div>
+        <div class="loop-card-body lang-zh">产品需求文档，含用户故事、功能优先级矩阵（MoSCoW）、验收标准与技术约束说明，可直接交付开发团队。</div>
+        <div class="loop-card-body lang-en">Product requirements document with user stories, MoSCoW priority matrix, acceptance criteria, and technical constraints — ready for dev handoff.</div>
+      </div>
+      <div class="loop-card">
+        <div class="loop-card-title lang-zh">CHI 2026论文</div>
+        <div class="loop-card-title lang-en">CHI 2026 Paper</div>
+        <div class="loop-card-body lang-zh">拟投稿ACM CHI 2026，系统阐述TAE框架的理论基础、研究方法与设计含义，目标读者为HCI学界与AI产品研究社区。</div>
+        <div class="loop-card-body lang-en">Under submission to ACM CHI 2026. Presents TAE's theoretical grounding, methodology, and design implications for the HCI and AI product research communities.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 08 Reflection ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">08 · 个人反思</div>
+    <div class="section-heading lang-en">08 · Personal Reflection</div>
+
+    <h2 class="body-heading lang-zh">研究者视角的三个收获</h2>
+    <h2 class="body-heading lang-en">Three Takeaways as a Researcher</h2>
+
+    <p class="body-text lang-zh">
+      这是我第一次独立主导从问题发现到框架构建、再到产品交付的完整研究周期。Wizard-of-Oz方法让我深刻理解了"验证假设"与"实现功能"之间的区别——在真正构建之前先证明核心价值，是产品研究中最有效的资源配置策略。
+    </p>
+    <p class="body-text lang-en">
+      This was my first time independently leading a complete research cycle from problem discovery through framework construction to product delivery. The Wizard-of-Oz method gave me a visceral understanding of the difference between "validating a hypothesis" and "implementing a feature" — proving core value before building is the most efficient resource allocation strategy in product research.
+    </p>
+
+    <p class="body-text lang-zh">
+      让我印象最深的是"有意义的摩擦"这一概念的演化过程。在访谈阶段，我们最初认为用户需要"更顺畅的AI体验"；实验阶段的数据反转了这一假设。好的研究设计让意外发现成为可能。
+    </p>
+    <p class="body-text lang-en">
+      What struck me most was watching the "meaningful friction" concept evolve. In the interview phase, we initially assumed users needed a smoother AI experience; the experiment data inverted that assumption. Good research design makes unexpected findings possible.
+    </p>
+
+    <p class="body-text lang-zh">
+      作为产品策略研究员，我在这个项目中学会了在"研究严谨性"与"产品落地可行性"之间做显性权衡——论文需要控制变量，PRD需要面对工程约束，两者的语言和逻辑都需要同时掌握。
+    </p>
+    <p class="body-text lang-en">
+      As a product strategy researcher, I learned to make the tradeoff between research rigor and product feasibility explicit — papers need controlled variables, PRDs need to meet engineering constraints, and both languages need to be spoken fluently at once.
+    </p>
+
+    <!-- Back link -->
+    <div style="margin-top: 48px;">
+      <a class="next-card" href="index.html">
+        <div>
+          <div class="next-card-label lang-zh">返回作品集</div>
+          <div class="next-card-label lang-en">Back to portfolio</div>
+          <div class="next-card-title lang-zh">Kimberly Shao — 所有项目</div>
+          <div class="next-card-title lang-en">Kimberly Shao — All Projects</div>
+        </div>
+        <div class="next-card-arrow">←</div>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function setLang(lang) {
+    document.body.className = lang;
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    history.replaceState(null, '', '?lang=' + lang);
+  }
+
+  (function init() {
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get('lang');
+    if (lang === 'en' || lang === 'zh') {
+      setLang(lang);
+    } else {
+      setLang('en');
+    }
+  })();
+</script>
+</body>
+</html>

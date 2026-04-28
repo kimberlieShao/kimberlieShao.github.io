@@ -1,30 +1,925 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Kimberlie Shao | HCI Researcher</title>
-    <style>
-        body { font-family: -apple-system, sans-serif; line-height: 1.6; max-width: 800px; margin: 50px auto; padding: 0 20px; color: #333; }
-        h1 { border-bottom: 2px solid #007aff; padding-bottom: 10px; }
-        .contact-links a { margin-right: 15px; color: #007aff; text-decoration: none; }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kimberly Shao · Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Noto+Serif+SC:wght@300;400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ── Reset & Base ───────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f7f6f2;
+      --surface:  #efede6;
+      --border:   #dedad0;
+      --text:     #2a2620;
+      --muted:    #7a756c;
+      --accent:   #3d3830;
+      --metric:   #1a1612;
+
+      --tag-aigc:    #6b46c1;
+      --tag-aipm:    #2563eb;
+      --tag-ux:      #0d9488;
+      --tag-data:    #b45309;
+
+      --font-en: 'Cormorant Garamond', Georgia, serif;
+      --font-zh: 'Noto Serif SC', 'Songti SC', serif;
+      --font-ui: 'Noto Sans SC', 'PingFang SC', sans-serif;
+
+      --sidebar-w: 300px;
+      --transition: 0.35s ease;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-en);
+      font-size: 16px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    body.zh {
+      font-family: var(--font-zh);
+    }
+
+    /* ── Language fade ──────────────────────────────────────── */
+    .lang-en, .lang-zh {
+      transition: opacity var(--transition);
+    }
+    body.en .lang-zh { display: none; }
+    body.zh .lang-en { display: none; }
+
+    /* ── Layout ─────────────────────────────────────────────── */
+    #app {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ── Sidebar ─────────────────────────────────────────────── */
+    #sidebar {
+      width: var(--sidebar-w);
+      min-width: var(--sidebar-w);
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      overflow-y: auto;
+      padding: 48px 32px 64px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    #sidebar::-webkit-scrollbar { width: 4px; }
+    #sidebar::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    .sidebar-name {
+      font-size: 1.65rem;
+      font-weight: 600;
+      letter-spacing: 0.01em;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    body.zh .sidebar-name { font-size: 1.45rem; }
+
+    .sidebar-title {
+      font-size: 0.82rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-family: var(--font-ui);
+      font-weight: 400;
+      margin-bottom: 28px;
+    }
+    body.zh .sidebar-title { text-transform: none; letter-spacing: 0.04em; }
+
+    .sidebar-bio {
+      font-size: 0.92rem;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 22px;
+    }
+    body.zh .sidebar-bio { font-size: 0.88rem; }
+
+    /* Tag chips */
+    .chip-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 32px;
+    }
+    .chip {
+      font-family: var(--font-ui);
+      font-size: 0.72rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 3px 10px;
+      border-radius: 999px;
+      white-space: nowrap;
+    }
+
+    /* Contact */
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .contact-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.82rem;
+      font-family: var(--font-ui);
+      color: var(--muted);
+    }
+    .contact-list a {
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .contact-list a:hover { color: var(--text); }
+    .contact-list .icon {
+      width: 14px;
+      text-align: center;
+      opacity: 0.6;
+      flex-shrink: 0;
+    }
+
+    /* Social icons row */
+    .social-row {
+      display: flex;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+    .social-row a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      font-family: var(--font-ui);
+      transition: color 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .social-row a:hover { color: var(--text); }
+
+    /* CV button */
+    .cv-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: var(--bg);
+      border: none;
+      border-radius: 6px;
+      padding: 11px 0;
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      letter-spacing: 0.04em;
+      cursor: pointer;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: auto;
+    }
+    .cv-btn:hover { background: #1a1612; transform: translateY(-1px); }
+
+    /* ── Main content ────────────────────────────────────────── */
+    #main {
+      flex: 1;
+      overflow-y: auto;
+      padding: 52px 56px 80px 56px;
+      max-width: 820px;
+    }
+
+    /* ── Language toggle ─────────────────────────────────────── */
+    #lang-toggle {
+      position: fixed;
+      top: 20px;
+      right: 28px;
+      z-index: 100;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      display: flex;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+    }
+    #lang-toggle button {
+      background: transparent;
+      border: none;
+      padding: 6px 16px;
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      cursor: pointer;
+      color: var(--muted);
+      transition: background 0.2s, color 0.2s;
+      letter-spacing: 0.03em;
+    }
+    #lang-toggle button.active {
+      background: var(--accent);
+      color: var(--bg);
+      border-radius: 999px;
+    }
+
+    /* ── Section ─────────────────────────────────────────────── */
+    .section {
+      margin-bottom: 56px;
+    }
+
+    .section-label {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    body.zh .section-label { text-transform: none; letter-spacing: 0.06em; font-size: 0.75rem; }
+
+    /* ── Education ───────────────────────────────────────────── */
+    .edu-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .edu-school {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+    body.zh .edu-school { font-size: 0.98rem; }
+    .edu-degree {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-family: var(--font-ui);
+    }
+    body.zh .edu-degree { font-size: 0.85rem; }
+    .edu-date {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      color: var(--muted);
+      white-space: nowrap;
+      margin-top: 3px;
+    }
+
+    /* ── Filter bar ──────────────────────────────────────────── */
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 28px;
+    }
+    .filter-btn {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      padding: 5px 14px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      letter-spacing: 0.02em;
+    }
+    .filter-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .filter-btn.active { background: var(--accent); color: var(--bg); border-color: var(--accent); }
+    .filter-btn[data-tag="AIGC"].active        { background: var(--tag-aigc); border-color: var(--tag-aigc); }
+    .filter-btn[data-tag="AI Product"].active  { background: var(--tag-aipm); border-color: var(--tag-aipm); }
+    .filter-btn[data-tag="UX Research"].active { background: var(--tag-ux);   border-color: var(--tag-ux); }
+    .filter-btn[data-tag="Data-Driven"].active { background: var(--tag-data); border-color: var(--tag-data); }
+
+    /* ── Project card ────────────────────────────────────────── */
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 26px 28px;
+      margin-bottom: 18px;
+      transition: opacity 0.25s, transform 0.25s;
+    }
+    .project-card.hidden {
+      display: none;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      line-height: 1.35;
+      flex: 1;
+    }
+    body.zh .card-title { font-size: 1.02rem; }
+
+    .card-date {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+      margin-top: 3px;
+    }
+
+    .card-role {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 14px;
+    }
+
+    /* tag badges */
+    .tag-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .tag-badge {
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 3px 9px;
+      border-radius: 4px;
+      color: #fff;
+      cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .tag-badge:hover { opacity: 0.82; }
+    .tag-badge.AIGC       { background: var(--tag-aigc); }
+    .tag-badge.AI-Product { background: var(--tag-aipm); }
+    .tag-badge.UX-Research{ background: var(--tag-ux); }
+    .tag-badge.Data-Driven{ background: var(--tag-data); }
+
+    /* CHI badge */
+    .chi-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: var(--font-ui);
+      font-size: 0.68rem;
+      background: #fef3c7;
+      color: #92400e;
+      border: 1px solid #fcd34d;
+      border-radius: 4px;
+      padding: 3px 9px;
+      margin-left: 4px;
+      vertical-align: middle;
+    }
+    .chi-badge::before { content: "📄"; font-size: 0.65rem; }
+
+    /* Tech stack */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px;
+      margin-bottom: 14px;
+    }
+    .tech-pill {
+      font-family: var(--font-ui);
+      font-size: 0.7rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 2px 8px;
+      border-radius: 3px;
+    }
+
+    /* Bullets */
+    .card-bullets {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+    .card-bullets li {
+      font-size: 0.88rem;
+      line-height: 1.65;
+      padding-left: 16px;
+      position: relative;
+      color: var(--text);
+    }
+    body.zh .card-bullets li { font-size: 0.855rem; }
+    .card-bullets li::before {
+      content: "–";
+      position: absolute;
+      left: 0;
+      color: var(--muted);
+    }
+
+    /* metric highlight */
+    .metric {
+      color: var(--metric);
+      font-weight: 600;
+    }
+    body.en .metric { font-style: italic; }
+
+    /* ── Work experience ─────────────────────────────────────── */
+    .work-item {
+      margin-bottom: 32px;
+    }
+    .work-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    .work-company {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+    body.zh .work-company { font-size: 0.98rem; }
+    .work-role {
+      font-family: var(--font-ui);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+    .work-date {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--muted);
+      white-space: nowrap;
+      margin-top: 3px;
+    }
+
+    /* ── Skills ──────────────────────────────────────────────── */
+    .skill-group {
+      margin-bottom: 18px;
+    }
+    .skill-label {
+      font-family: var(--font-ui);
+      font-size: 0.75rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      margin-bottom: 8px;
+      text-transform: uppercase;
+    }
+    body.zh .skill-label { text-transform: none; }
+    .skill-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-pill {
+      font-family: var(--font-ui);
+      font-size: 0.78rem;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 4px 11px;
+      border-radius: 5px;
+    }
+
+    /* ── Divider ─────────────────────────────────────────────── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 4px 0 20px;
+    }
+
+    /* ── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      #app { flex-direction: column; }
+      #sidebar {
+        width: 100%;
+        min-width: unset;
+        height: auto;
+        position: static;
+        padding: 36px 24px 32px;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+      }
+      #main { padding: 36px 24px 60px; }
+      .edu-item { flex-direction: column; gap: 4px; }
+      .card-header { flex-direction: column; gap: 4px; }
+      .work-header { flex-direction: column; gap: 4px; }
+      #lang-toggle { top: 12px; right: 16px; }
+    }
+  </style>
 </head>
-<body>
-    <h1>Luoqing (Kimberlie) Shao</h1>
-    <p>👋 你好！我是一名专注于 <b>Human-AI Interaction</b> 和 <b>Value Alignment</b> 的研究者。</p>
-    <p>目前在 UNC Chapel Hill 学习。这是我从 Wix 搬迁过来的新主页。</p>
-    
-    <h3>研究方向</h3>
-    <ul>
-        <li>人机交互 (HCI)</li>
-        <li>时间能动性 (Temporal Agency)</li>
-        <li>生成式 AI 的价值对齐</li>
+<body class="en">
+
+<!-- Language toggle -->
+<div id="lang-toggle">
+  <button id="btn-en" class="active" onclick="setLang('en')">EN</button>
+  <button id="btn-zh"                onclick="setLang('zh')">中文</button>
+</div>
+
+<div id="app">
+
+  <!-- ── SIDEBAR ──────────────────────────────────────────────── -->
+  <aside id="sidebar">
+
+    <!-- Avatar + Name -->
+    <div style="margin-bottom: 20px;">
+      <img src="avatar.jpg"
+        style="width:100%; height:200px; border-radius:10px; object-fit:cover; object-position:center 45%; display:block; border:0.5px solid var(--border); margin-bottom:14px;">
+      <p class="name-en" style="text-align:left; margin-bottom:3px;">Kimberly Shao</p>
+      <p class="tagline lang-en" style="text-align:left;">PM &amp; Researcher · AI Product</p>
+      <p class="tagline lang-zh" style="text-align:left;">产品经理 &amp; 研究员 · AI产品</p>
+    </div>
+
+    <!-- Bio -->
+    <p class="sidebar-bio lang-en">
+      Incoming M.S. Information @ University of Michigan. B.S. Information Science @ UNC Chapel Hill (GPA 3.89, Dean's List).<br><br>
+      PM &amp; researcher bridging AI product strategy, AIGC quality systems, and user research. Open to PM internships from May 2026.
+    </p>
+    <p class="sidebar-bio lang-zh">
+      信息科学本科在读（GPA 3.89），即将就读密歇根大学信息学院硕士。<br><br>
+      专注 AI 产品策略与 AIGC 质量控制，有 LLM pipeline 设计、用户研究及数据驱动产品经验。
+    </p>
+
+    <!-- Job-seeking chips -->
+    <div class="chip-row lang-en">
+      <span class="chip">AI Product Manager Intern</span>
+      <span class="chip">Available May 2026</span>
+      <span class="chip">Open to relocation</span>
+    </div>
+    <div class="chip-row lang-zh">
+      <span class="chip">AI产品经理实习</span>
+      <span class="chip">可2026年5月入职</span>
+      <span class="chip">可实习3-6个月</span>
+      <span class="chip">求职地区不限</span>
+    </div>
+
+    <!-- Contact -->
+    <ul class="contact-list">
+      <li>
+        <span class="icon">✉</span>
+        <a href="mailto:kimberlieshao@gmail.com">kimberlieshao@gmail.com</a>
+      </li>
+      <li>
+        <span class="icon">☎</span>
+        <a href="tel:+15179741558">+1 517-974-1558</a>
+      </li>
     </ul>
 
-    <div class="contact-links">
-        <a href="#">Email</a>
-        <a href="#">LinkedIn</a>
-        <a href="#">Google Scholar</a>
+    <!-- Social links -->
+    <div class="social-row">
+      <a href="https://github.com/kimberlieshao" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.008-.866-.013-1.7-2.782.603-3.369-1.342-3.369-1.342-.454-1.154-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.268 2.75 1.026A9.578 9.578 0 0112 6.836c.85.004 1.705.114 2.504.337 1.909-1.294 2.747-1.026 2.747-1.026.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z"/></svg>
+        GitHub
+      </a>
+      <a href="https://linkedin.com/in/kimberlieshao" target="_blank" rel="noopener">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
     </div>
+
+    <!-- CV download -->
+    <a id="cv-link" class="cv-btn" href="en-cv.pdf" download>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      <span class="lang-en">Download CV</span>
+      <span class="lang-zh">下载简历</span>
+    </a>
+
+  </aside>
+
+  <!-- ── MAIN ──────────────────────────────────────────────────── -->
+  <main id="main">
+
+    <!-- ── EDUCATION ─────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label lang-en">Education</div>
+      <div class="section-label lang-zh">教育背景</div>
+
+      <!-- UMich -->
+      <div class="edu-item">
+        <div class="edu-left">
+          <div class="edu-school lang-en">University of Michigan, School of Information</div>
+          <div class="edu-school lang-zh">密歇根大学信息学院</div>
+          <div class="edu-degree lang-en">M.S. Information · Incoming</div>
+          <div class="edu-degree lang-zh">信息科学硕士（即将入学）</div>
+        </div>
+        <div class="edu-date lang-en">Incoming</div>
+        <div class="edu-date lang-zh">即将入学</div>
+      </div>
+      <hr class="divider" />
+
+      <!-- UNC -->
+      <div class="edu-item">
+        <div class="edu-left">
+          <div class="edu-school lang-en">UNC Chapel Hill</div>
+          <div class="edu-school lang-zh">北卡罗来纳大学教堂山分校</div>
+          <div class="edu-degree lang-en">B.S. Information Science · GPA <span class="metric">3.89</span>/4.00 · Dean's List (Fall 2024–present)</div>
+          <div class="edu-degree lang-zh">信息科学学士 · GPA <span class="metric">3.89</span>/4.00 · 院长名单（2024秋–至今）</div>
+        </div>
+        <div class="edu-date">May 2026</div>
+      </div>
+    </section>
+
+    <!-- ── PROJECTS ───────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label lang-en">Projects</div>
+      <div class="section-label lang-zh">项目经历</div>
+
+      <!-- Filter bar -->
+      <div class="filter-bar">
+        <button class="filter-btn active" data-tag="All" onclick="filterProjects('All')">
+          <span class="lang-en">All</span><span class="lang-zh">全部</span>
+        </button>
+        <button class="filter-btn" data-tag="AIGC" onclick="filterProjects('AIGC')">AIGC</button>
+        <button class="filter-btn" data-tag="AI Product" onclick="filterProjects('AI Product')">AI Product</button>
+        <button class="filter-btn" data-tag="UX Research" onclick="filterProjects('UX Research')">UX Research</button>
+        <button class="filter-btn" data-tag="Data-Driven" onclick="filterProjects('Data-Driven')">Data-Driven</button>
+      </div>
+
+      <!-- Project 1: LLM Mental Health -->
+      <div class="project-card" data-tags="AIGC,AI Product">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="lang-en">LLM-based Conversational AI Mental Health System</span>
+            <span class="lang-zh">基于LLM的对话式AI心理干预系统</span>
+          </div>
+          <div class="card-date">2025.10 – Present</div>
+        </div>
+        <div class="card-role lang-en">Product Strategy Lead · UNC NiCE Lab</div>
+        <div class="card-role lang-zh">产品策略负责人 · UNC NiCE Lab</div>
+        <div class="tag-row">
+          <span class="tag-badge AIGC" onclick="filterProjects('AIGC')">AIGC</span>
+          <span class="tag-badge AI-Product" onclick="filterProjects('AI Product')">AI Product</span>
+        </div>
+        <div class="tech-row">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">LangChain</span>
+          <span class="tech-pill">Prompt Engineering</span>
+          <span class="tech-pill">GPT-4 API</span>
+        </div>
+        <ul class="card-bullets lang-en">
+          <li>Independently designed a tri-modal tone-persona system (Warm / Professional / Neutral); co-developed prompt specs with clinical psychologists</li>
+          <li>Built dual-layer content validation: LLM-as-Judge scoring + user study (N=20); achieved <span class="metric">88.8%</span> tone consistency and <span class="metric">91%</span> user satisfaction</li>
+          <li>AIGC quality control framework is directly transferable to content creation platforms for style consistency and safety compliance</li>
+        </ul>
+        <ul class="card-bullets lang-zh">
+          <li>独立设计三模态语气人格体系（温暖型/专业型/中性型），与临床心理师协作制定提示词规范</li>
+          <li>设计双层内容验证机制：LLM-as-Judge自动评分 + 用户实验（N=20），实现语气生成一致性 <span class="metric">88.8%</span>、用户满意度 <span class="metric">91%</span></li>
+          <li>所构建的AIGC输出质量控制框架可直接迁移至内容创作场景，提供风格一致性与安全合规的产品层解决方案</li>
+        </ul>
+      </div>
+
+      <!-- Project 2: TAE -->
+      <div class="project-card" data-tags="AI Product,UX Research">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="lang-en">AI Time Management &amp; Value Alignment (TAE Framework)</span>
+            <span class="lang-zh">AI时间管理产品与价值对齐研究（TAE框架）</span>
+            <span class="chi-badge lang-en">Paper under submission · CHI 2026</span>
+            <span class="chi-badge lang-zh">论文拟投稿 · CHI 2026</span>
+          </div>
+          <div class="card-date">2025.05 – 2025.10</div>
+        </div>
+        <div class="card-role lang-en">Product Strategy Researcher · Tsinghua Pervasive HCI Lab</div>
+        <div class="card-role lang-zh">产品策略研究员 · 清华大学 Pervasive HCI Lab</div>
+        <div class="tag-row">
+          <span class="tag-badge AI-Product" onclick="filterProjects('AI Product')">AI Product</span>
+          <span class="tag-badge UX-Research" onclick="filterProjects('UX Research')">UX Research</span>
+        </div>
+        <div class="tech-row">
+          <span class="tech-pill">Python</span>
+          <span class="tech-pill">Figma</span>
+          <span class="tech-pill">Wizard-of-Oz</span>
+          <span class="tech-pill">Qualitative Coding</span>
+        </div>
+        <ul class="card-bullets lang-en">
+          <li>Identified core gap in AI time management tools (efficiency over values); proposed differentiated direction centered on time autonomy</li>
+          <li>Led 2-phase mixed-methods research: formative interviews (N=12) + Wizard-of-Oz experiment (N=10); validated 3-layer architecture, κ=<span class="metric">0.82</span></li>
+          <li>Delivered hi-fi prototype + full PRD with user stories, feature priorities, and acceptance criteria to drive MVP development</li>
+        </ul>
+        <ul class="card-bullets lang-zh">
+          <li>通过竞品分析识别现有AI时间管理工具重效率轻价值观的核心缺陷，提出以时间自主性赋能为核心的差异化产品方向</li>
+          <li>主导两阶段混合研究：形成性访谈（N=12）+ Wizard-of-Oz干预实验（N=10），验证三层架构可行性，达成一致性 κ=<span class="metric">0.82</span></li>
+          <li>输出高保真原型与完整PRD，定义用户故事、功能优先级与验收标准，推动从需求到MVP全流程落地</li>
+        </ul>
+        <div style="margin-top:14px">
+          <a class="lang-en" href="tae.html?lang=en" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">View Project →</a>
+          <a class="lang-zh" href="tae.html?lang=zh" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">查看项目详情 →</a>
+        </div>
+      </div>
+
+      <!-- Project 3: Vanguard -->
+      <div class="project-card" data-tags="UX Research">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="lang-en">Vanguard Annual Review Interface Redesign</span>
+            <span class="lang-zh">Vanguard年度回顾界面重设计</span>
+          </div>
+          <div class="card-date">2025.08 – 2025.12</div>
+        </div>
+        <div class="card-role lang-en">UX/UI Designer · UNC Chapel Hill</div>
+        <div class="card-role lang-zh">UX/UI设计师 · 北卡罗来纳大学</div>
+        <div class="tag-row">
+          <span class="tag-badge UX-Research" onclick="filterProjects('UX Research')">UX Research</span>
+        </div>
+        <div class="tech-row">
+          <span class="tech-pill">Figma</span>
+          <span class="tech-pill">Usability Testing</span>
+          <span class="tech-pill">Card Sorting</span>
+        </div>
+        <ul class="card-bullets lang-en">
+          <li>Conducted usability tests and interviews with <span class="metric">20</span> users (50+); created personas and empathy maps; restructured IA to align with decision journeys</li>
+          <li>Delivered <span class="metric">15+</span> hi-fi prototype screens in Figma; presented to Vanguard senior UX designers and iterated based on feedback</li>
+        </ul>
+        <ul class="card-bullets lang-zh">
+          <li>访谈50岁以上用户 <span class="metric">20</span> 人，创建角色画像与同理心地图，重构信息架构使结构与用户决策旅程对齐</li>
+          <li>输出高保真原型 <span class="metric">15</span> 页以上，向Vanguard资深UX设计师展示并完成迭代优化</li>
+        </ul>
+        <div style="margin-top:14px">
+          <a class="lang-en" href="vanguard.html?lang=en" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">View Project →</a>
+          <a class="lang-zh" href="vanguard.html?lang=zh" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">查看项目详情 →</a>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ── WORK EXPERIENCE ────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label lang-en">Work Experience</div>
+      <div class="section-label lang-zh">工作经历</div>
+
+      <!-- Job 1 -->
+      <div class="work-item">
+        <div class="work-header">
+          <div>
+            <div class="work-company lang-en">The Style That Binds Us · New York</div>
+            <div class="work-company lang-zh">The Style That Binds Us（纽约）</div>
+            <div class="work-role lang-en">Product Manager</div>
+            <div class="work-role lang-zh">产品经理</div>
+          </div>
+          <div class="work-date">2025.05 – 2025.09</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag-badge Data-Driven" onclick="filterProjects('Data-Driven')">Data-Driven</span>
+        </div>
+        <ul class="card-bullets lang-en">
+          <li>Designed <span class="metric">2</span> rounds of A/B tests on email subject lines and segments; increased open rate from <span class="metric">28%</span> to <span class="metric">41%</span></li>
+          <li>Rebuilt client intake flow with Typeform + Zapier for automated VIP lead routing; reduced manual processing time by <span class="metric">36%</span></li>
+          <li>Built financial industry outreach database via SerpAPI scraping; expanded addressable client base by <span class="metric">12%</span></li>
+        </ul>
+        <ul class="card-bullets lang-zh">
+          <li>独立设计 <span class="metric">2</span> 轮A/B测试，将邮件打开率从 <span class="metric">28%</span> 提升至 <span class="metric">41%</span>，整理复盘报告</li>
+          <li>用Typeform + Zapier重构客户接待流程，实现VIP线索自动识别，将人工处理时长缩短 <span class="metric">36%</span></li>
+          <li>通过SerpAPI爬取行业名录，构建金融领域女性高管触达数据库，可寻址客户规模扩大 <span class="metric">12%</span></li>
+        </ul>
+      </div>
+
+      <hr class="divider" />
+
+      <!-- Job 2 -->
+      <div class="work-item">
+        <div class="work-header">
+          <div>
+            <div class="work-company lang-en">E-Global Trading LLC · Irvine, CA</div>
+            <div class="work-company lang-zh">E-Global Trading LLC（加州尔湾）</div>
+            <div class="work-role lang-en">Product Manager</div>
+            <div class="work-role lang-zh">产品经理</div>
+          </div>
+          <div class="work-date">2024.04 – 2025.07</div>
+        </div>
+        <div class="tag-row">
+          <span class="tag-badge Data-Driven" onclick="filterProjects('Data-Driven')">Data-Driven</span>
+        </div>
+        <ul class="card-bullets lang-en">
+          <li>Delivered <span class="metric">10+</span> hi-fi prototype iterations in Figma; restructured IA and optimized <span class="metric">2</span> key user flows; supported <span class="metric">100+</span> product launches</li>
+          <li>Built SQL-powered sales dashboards; used Google Trends to identify high-potential segments and inform procurement decisions</li>
+        </ul>
+        <ul class="card-bullets lang-zh">
+          <li>在Figma中输出 <span class="metric">10</span> 版以上高保真原型，重构信息架构，优化 <span class="metric">2</span> 条关键用户路径，支持 <span class="metric">100</span> 款以上产品上线</li>
+          <li>用SQL提取销售数据建立指标看板，结合Google Trends识别高潜力市场细分，支持选品与补货决策</li>
+        </ul>
+      </div>
+
+    </section>
+
+    <!-- ── SKILLS ─────────────────────────────────────────── -->
+    <section class="section">
+      <div class="section-label lang-en">Skills</div>
+      <div class="section-label lang-zh">技能</div>
+
+      <div class="skill-group">
+        <div class="skill-label lang-en">AI Tools</div>
+        <div class="skill-label lang-zh">AI 工具</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Midjourney</span>
+          <span class="skill-pill">Sora</span>
+          <span class="skill-pill">GPT-4 API</span>
+          <span class="skill-pill">LangChain</span>
+          <span class="skill-pill">Prompt Engineering</span>
+          <span class="skill-pill">LLM Pipeline Design</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label lang-en">Product &amp; Design</div>
+        <div class="skill-label lang-zh">产品与设计</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Figma</span>
+          <span class="skill-pill">Axure</span>
+          <span class="skill-pill">Sketch</span>
+          <span class="skill-pill">墨刀 Mockplus</span>
+          <span class="skill-pill">Visio</span>
+          <span class="skill-pill">PRD Writing</span>
+          <span class="skill-pill">User Research</span>
+          <span class="skill-pill">Usability Testing</span>
+          <span class="skill-pill">A/B Testing</span>
+          <span class="skill-pill">Competitive Analysis</span>
+          <span class="skill-pill">Tableau</span>
+          <span class="skill-pill">Power BI</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label lang-en">Engineering &amp; Data</div>
+        <div class="skill-label lang-zh">工程与数据</div>
+        <div class="skill-pills">
+          <span class="skill-pill">Python</span>
+          <span class="skill-pill">Pandas</span>
+          <span class="skill-pill">NumPy</span>
+          <span class="skill-pill">SQL</span>
+          <span class="skill-pill">HTML/CSS</span>
+          <span class="skill-pill">R</span>
+          <span class="skill-pill">SerpAPI</span>
+          <span class="skill-pill">Typeform</span>
+          <span class="skill-pill">Zapier</span>
+        </div>
+      </div>
+
+      <div class="skill-group">
+        <div class="skill-label lang-en">Languages</div>
+        <div class="skill-label lang-zh">语言</div>
+        <div class="skill-pills">
+          <span class="skill-pill lang-en">Mandarin (native)</span>
+          <span class="skill-pill lang-en">English (TOEFL 109)</span>
+          <span class="skill-pill lang-zh">英语（托福 109）</span>
+          <span class="skill-pill lang-zh">普通话（母语）</span>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<script>
+  /* ── Language switch ──────────────────────────────────────── */
+  function setLang(lang) {
+    document.body.className = lang;
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+
+    // CV link
+    document.getElementById('cv-link').href = lang === 'zh' ? 'zh-cv.pdf' : 'en-cv.pdf';
+  }
+
+  (function () {
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get('lang');
+    if (lang === 'en' || lang === 'zh') {
+      setLang(lang);
+    } else {
+      setLang('en');
+    }
+  })();
+
+  /* ── Project filter ───────────────────────────────────────── */
+  function filterProjects(tag) {
+    // Update active filter button
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.tag === tag);
+    });
+
+    // Show / hide cards
+    document.querySelectorAll('.project-card').forEach(card => {
+      if (tag === 'All') {
+        card.classList.remove('hidden');
+      } else {
+        const tags = card.dataset.tags.split(',');
+        card.classList.toggle('hidden', !tags.includes(tag));
+      }
+    });
+  }
+</script>
+
 </body>
 </html>

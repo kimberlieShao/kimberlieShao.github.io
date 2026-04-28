@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vanguard Redesign — Kimberly Shao</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Noto+Serif+SC:wght@400;500;600&family=Noto+Sans+SC:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --surface: #efede6;
+      --border: #dedad0;
+      --text: #2a2620;
+      --muted: #7a756c;
+      --accent: #3d3830;
+      --metric: #1a1612;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    body.zh .lang-en { display: none; }
+    body.en .lang-zh { display: none; }
+
+    /* ── Nav ── */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--bg);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 32px;
+      height: 52px;
+    }
+    .nav-back {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 13px;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: color 0.15s;
+    }
+    .nav-back:hover { color: var(--text); }
+
+    .lang-toggle {
+      display: flex;
+      gap: 2px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 3px;
+    }
+    .lang-toggle button {
+      background: none;
+      border: none;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 12px;
+      color: var(--muted);
+      padding: 3px 12px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+    .lang-toggle button.active {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    /* ── Layout ── */
+    .page-wrap {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 24px 80px;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 52px 0 40px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 48px;
+    }
+    .hero-eyebrow {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 16px;
+    }
+    .hero-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: clamp(26px, 5vw, 40px);
+      font-weight: 500;
+      line-height: 1.2;
+      color: var(--metric);
+      margin-bottom: 14px;
+    }
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: clamp(15px, 2.5vw, 19px);
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.45;
+      margin-bottom: 20px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 28px;
+    }
+
+    /* ── Stat row ── */
+    .stat-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+    @media (max-width: 600px) { .stat-row { grid-template-columns: repeat(2, 1fr); } }
+    .stat-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 30px;
+      font-weight: 600;
+      color: var(--metric);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+    .stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+    }
+
+    /* ── Section ── */
+    .section { margin-bottom: 56px; }
+    .section-heading {
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      margin-bottom: 20px;
+    }
+    h2.body-heading {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 22px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 14px;
+      line-height: 1.3;
+    }
+    p.body-text {
+      font-size: 15px;
+      color: var(--text);
+      line-height: 1.75;
+      margin-bottom: 14px;
+    }
+
+    /* ── Hero pull quote (large, centered) ── */
+    .pull-quote-hero {
+      text-align: center;
+      margin: 36px 0;
+      padding: 8px 0;
+    }
+    .pull-quote-hero .pq-text {
+      display: block;
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: clamp(22px, 4vw, 34px);
+      font-style: italic;
+      color: var(--accent);
+      line-height: 1.3;
+      margin-bottom: 14px;
+    }
+    .pull-quote-hero .pq-attr {
+      display: block;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* ── Grid helpers ── */
+    .cards-2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 560px) { .cards-2 { grid-template-columns: 1fr; } }
+
+    .cards-4 {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 680px) { .cards-4 { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 380px) { .cards-4 { grid-template-columns: 1fr; } }
+
+    /* ── Card: filled ── */
+    .v-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px 16px;
+    }
+    .v-card-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 8px;
+    }
+    .v-card-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── Card: outline only ── */
+    .v-card-outline {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 16px 14px;
+    }
+    .v-card-outline .v-card-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 6px;
+    }
+    .v-card-outline .v-card-body {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── Finding card ── */
+    .finding-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 20px 18px;
+    }
+    .finding-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 400;
+      color: var(--border);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+    .finding-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--metric);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+    .finding-body {
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    /* ── Goals list ── */
+    .goals-list { list-style: none; margin: 4px 0; }
+    .goal-item {
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .goal-item:last-child { border-bottom: none; }
+    .goal-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--border);
+      flex-shrink: 0;
+      width: 26px;
+      padding-top: 1px;
+    }
+    .goal-text {
+      flex: 1;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    /* ── Sub-heading ── */
+    .sub-heading {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--metric);
+      margin: 28px 0 10px;
+    }
+
+    /* ── Pre-test insight ── */
+    .pre-test-insight {
+      background: var(--surface);
+      border-left: 3px solid var(--border);
+      border-radius: 0 8px 8px 0;
+      padding: 13px 18px;
+      font-size: 14px;
+      color: var(--accent);
+      line-height: 1.65;
+      margin: 20px 0;
+    }
+
+    /* ── Two-image row ── */
+    .two-img-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    @media (max-width: 540px) { .two-img-row { grid-template-columns: 1fr; } }
+
+    /* ── Image placeholders ── */
+    .img-placeholder {
+      background: var(--surface);
+      border: 1px dashed var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-family: 'Noto Sans SC', sans-serif;
+      width: 100%;
+    }
+    .img-placeholder.full  { height: 320px; margin: 16px 0 6px; }
+    .img-placeholder.half  { height: 240px; }
+    .img-caption {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-top: 8px;
+      margin-bottom: 4px;
+      font-style: italic;
+    }
+
+    /* ── Before / After grid ── */
+    .ba-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin: 20px 0;
+    }
+    @media (max-width: 540px) { .ba-grid { grid-template-columns: 1fr; } }
+    .ba-label {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 8px;
+    }
+
+    /* ── Decision block ── */
+    .decision-block {
+      margin-top: 36px;
+      padding-bottom: 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .decision-block:last-child { border-bottom: none; padding-bottom: 0; }
+    .decision-tag {
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .decision-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--metric);
+      line-height: 1.3;
+      margin-bottom: 20px;
+    }
+    .change-heading, .why-heading {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 20px 0 8px;
+    }
+
+    /* ── Bullet list ── */
+    .bullet-list { list-style: none; margin: 0 0 6px; }
+    .bullet-list li {
+      display: flex;
+      gap: 10px;
+      font-size: 14px;
+      color: var(--text);
+      line-height: 1.65;
+      padding: 3px 0;
+    }
+    .bullet-list li::before { content: '—'; color: var(--muted); flex-shrink: 0; }
+
+    /* ── My Take ── */
+    .my-take {
+      border-left: 2px solid var(--border);
+      padding-left: 1.5rem;
+      margin-top: 20px;
+    }
+    .my-take-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+    .my-take p {
+      font-size: 13px;
+      font-style: italic;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* ── Figma button ── */
+    .figma-btn-wrap { text-align: center; margin: 22px 0 10px; }
+    .figma-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--accent);
+      color: var(--bg);
+      text-decoration: none;
+      border-radius: 6px;
+      padding: 11px 26px;
+      font-family: 'Noto Sans SC', sans-serif;
+      font-size: 13px;
+      letter-spacing: 0.03em;
+      transition: background 0.2s;
+    }
+    .figma-btn:hover { background: var(--metric); }
+    .figma-note {
+      text-align: center;
+      font-size: 12px;
+      color: var(--muted);
+      margin-top: 10px;
+    }
+
+    /* ── Next card ── */
+    .next-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 28px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .next-card:hover { border-color: var(--accent); }
+    .next-card-label {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+    .next-card-title {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--metric);
+    }
+    .next-card-arrow { font-size: 22px; color: var(--muted); }
+
+    /* ── Goals heading ── */
+    .goals-heading {
+      font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+      font-size: 18px;
+      font-weight: 500;
+      color: var(--metric);
+      margin: 32px 0 4px;
+    }
+  </style>
+</head>
+<body class="en">
+
+<nav>
+  <a class="nav-back" href="index.html">← Kimberly Shao</a>
+  <div class="lang-toggle">
+    <button id="btn-zh" class="active" onclick="setLang('zh')">中文</button>
+    <button id="btn-en" onclick="setLang('en')">EN</button>
+  </div>
+</nav>
+
+<div class="page-wrap">
+
+  <!-- ── Hero ── -->
+  <section class="hero">
+    <div class="hero-eyebrow">UX RESEARCH · UI DESIGN · FINTECH · ACCESSIBILITY</div>
+
+    <h1 class="hero-title lang-zh">Vanguard 年度回顾界面重设计（50岁以上用户）</h1>
+    <h1 class="hero-title lang-en">Vanguard Year-in-Review Redesign for Adults 50+</h1>
+
+    <p class="hero-subtitle lang-zh">将数据报告转化为以安心感为核心的叙事体验</p>
+    <p class="hero-subtitle lang-en">Turning a data report into a reassurance-first narrative experience</p>
+
+    <div class="hero-meta">
+      <span class="lang-zh">2025年9月–12月 · 北卡罗来纳大学教堂山分校 · 五人团队 · 我的角色：UX/UI设计师 &amp; 研究负责人</span>
+      <span class="lang-en">Sep – Dec 2025 · UNC Chapel Hill · Team of 5 · My role: UX/UI Designer &amp; Research Lead</span>
+    </div>
+
+    <div class="stat-row">
+      <div class="stat-card">
+        <div class="stat-number">20</div>
+        <div class="stat-label lang-zh">可用性测试参与者（50岁以上）</div>
+        <div class="stat-label lang-en">Usability test participants (adults 50+)</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:22px">8 → 1</div>
+        <div class="stat-label lang-zh">将8个独立页面整合为单页长滚动</div>
+        <div class="stat-label lang-en">Pages consolidated into single scroll</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:20px">4–5 / 5</div>
+        <div class="stat-label lang-zh">信息结构易用性测试评分</div>
+        <div class="stat-label lang-en">Post-test ratings for findability &amp; information structure</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:16px; font-weight:500; padding-top:6px">Vanguard</div>
+        <div class="stat-label lang-zh">向Vanguard资深UX设计师展示</div>
+        <div class="stat-label lang-en">Presented to senior UX designers</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 01 THE CHALLENGE ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">01 · 问题背景</div>
+    <div class="section-heading lang-en">01 · THE CHALLENGE</div>
+
+    <h2 class="body-heading lang-zh">退休投资者打开年度回顾只想回答一个问题——而现有设计让这变得不可能</h2>
+    <h2 class="body-heading lang-en">Retirement investors open Year in Review to answer one question — and the existing design makes it impossible</h2>
+
+    <p class="body-text lang-zh">对50岁以上的用户来说，年度回顾不是数据分析面板，而是一次情感上的自我确认时刻：我的持续投入真的有意义吗，还是一切都只是市场波动？现有的 Vanguard 设计对这个问题没有给出清晰的答案。</p>
+    <p class="body-text lang-en">For adults 50+, Year in Review is not an analytics dashboard. It's a moment of emotional reckoning: did my contributions actually make a difference, or was it all just market movement? The existing Vanguard experience answered neither question clearly.</p>
+
+    <div class="pull-quote-hero">
+      <span class="pq-text lang-zh">"这是我努力的结果，还是市场的功劳？"</span>
+      <span class="pq-text lang-en">"Was that growth me, or just the market?"</span>
+      <span class="pq-attr lang-zh">—— 贯穿所有用户访谈的核心疑问</span>
+      <span class="pq-attr lang-en">— Recurring theme across all user interviews</span>
+    </div>
+
+    <div class="cards-2">
+      <div class="v-card">
+        <div class="v-card-title lang-zh">入口隐藏过深</div>
+        <div class="v-card-title lang-en">High interaction cost</div>
+        <div class="v-card-body lang-zh">年度回顾入口藏在页面底部，用户需要滚动浏览完整个投资图表区才能找到它。</div>
+        <div class="v-card-body lang-en">Year in Review is buried below the fold — users had to scroll past investment charts just to find the entry point.</div>
+      </div>
+      <div class="v-card">
+        <div class="v-card-title lang-zh">缺乏叙事连贯性</div>
+        <div class="v-card-title lang-en">No cohesive story</div>
+        <div class="v-card-body lang-zh">大量图表和标签堆砌，缺乏情境说明。用户看到数字，却无法理解这些数字对自己意味着什么。</div>
+        <div class="v-card-body lang-en">Dense charts and labels appear without context. Users see numbers but can't interpret what they mean for their personal situation.</div>
+      </div>
+      <div class="v-card">
+        <div class="v-card-title lang-zh">来源归因缺失</div>
+        <div class="v-card-title lang-en">Missing attribution</div>
+        <div class="v-card-body lang-zh">设计只展示期初和期末余额，从不解释变化的原因——是个人的持续投入？市场涨幅？还是提款导致的？</div>
+        <div class="v-card-body lang-en">The design shows starting balance vs. ending balance — but never explains what drove the change. Contributions? Market gains? Withdrawals?</div>
+      </div>
+      <div class="v-card">
+        <div class="v-card-title lang-zh">行动指引模糊</div>
+        <div class="v-card-title lang-en">Unclear next steps</div>
+        <div class="v-card-body lang-zh">结尾的核对清单过于抽象，用户看完后不知道下一步应该采取什么具体行动。</div>
+        <div class="v-card-body lang-en">The checklist at the end feels abstract. Users leave without knowing what concrete action to take.</div>
+      </div>
+    </div>
+
+    <h3 class="goals-heading lang-zh">设计目标</h3>
+    <h3 class="goals-heading lang-en">Design Goals</h3>
+    <ul class="goals-list">
+      <li class="goal-item">
+        <span class="goal-num">1</span>
+        <div class="goal-text">
+          <span class="lang-zh">以安心感为先、叙事驱动的方式重建用户信任与信息清晰度</span>
+          <span class="lang-en">Build trust and clarity through a reassurance-first, narrative-driven review</span>
+        </div>
+      </li>
+      <li class="goal-item">
+        <span class="goal-num">2</span>
+        <div class="goal-text">
+          <span class="lang-zh">明确归因——将个人投入与市场收益清晰分离</span>
+          <span class="lang-en">Make attribution explicit — separate personal contributions from market gains</span>
+        </div>
+      </li>
+      <li class="goal-item">
+        <span class="goal-num">3</span>
+        <div class="goal-text">
+          <span class="lang-zh">加入可信的参照基准，帮助用户验证自身表现</span>
+          <span class="lang-en">Add credible context to validate performance</span>
+        </div>
+      </li>
+      <li class="goal-item">
+        <span class="goal-num">4</span>
+        <div class="goal-text">
+          <span class="lang-zh">将洞察转化为具体可执行的下一步行动</span>
+          <span class="lang-en">Translate insights into concrete, actionable next steps</span>
+        </div>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ── 02 RESEARCH ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">02 · 用户研究</div>
+    <div class="section-heading lang-en">02 · RESEARCH</div>
+
+    <h2 class="body-heading lang-zh">两种研究方法，一个核心洞察——这类用户需要先被安慰，再看数据</h2>
+    <h2 class="body-heading lang-en">Two methods, one insight — this audience needs reassurance before data</h2>
+
+    <h3 class="sub-heading lang-zh">可用性测试 · N=20</h3>
+    <h3 class="sub-heading lang-en">Usability Testing · N=20</h3>
+
+    <div class="cards-4" style="margin-top: 12px;">
+      <div class="v-card-outline">
+        <div class="v-card-title lang-zh">测试结构</div>
+        <div class="v-card-title lang-en">Session Breakdown</div>
+        <div class="v-card-body lang-zh">15分钟倾听 · 2–3分钟自由探索 · 20–25分钟核心任务 · 3–5分钟测后访谈</div>
+        <div class="v-card-body lang-en">15-min listening · 2–3 min free explore · 20–25 min core tasks · 3–5 min post-test</div>
+      </div>
+      <div class="v-card-outline">
+        <div class="v-card-title lang-zh">主持规范</div>
+        <div class="v-card-title lang-en">Moderation Protocol</div>
+        <div class="v-card-body lang-zh">中立立场，出声思考协议，全程录制用于后续分析</div>
+        <div class="v-card-body lang-en">Neutral stance, think-aloud protocol, recorded for synthesis and analysis</div>
+      </div>
+      <div class="v-card-outline">
+        <div class="v-card-title lang-zh">研究工具</div>
+        <div class="v-card-title lang-en">Tools</div>
+        <div class="v-card-body lang-zh">Vanguard 可点击原型，Google 表单问卷</div>
+        <div class="v-card-body lang-en">Vanguard clickable prototype, Google Form surveys</div>
+      </div>
+      <div class="v-card-outline">
+        <div class="v-card-title lang-zh">研究样本</div>
+        <div class="v-card-title lang-en">Sample</div>
+        <div class="v-card-body lang-zh">50岁以上、具备数字设备使用能力的主动投资者</div>
+        <div class="v-card-body lang-en">Adults 50+, digitally active investors</div>
+      </div>
+    </div>
+
+    <div class="pre-test-insight lang-zh">40%参与者年龄在70岁以上，80%使用桌面端，40%需要更大的字体——进一步验证了对清晰度、归因说明和无障碍设计的需求。</div>
+    <div class="pre-test-insight lang-en">40% aged 70+, 80% desktop users, 40% needed larger text — reinforcing the need for clarity, attribution, and accessible next steps.</div>
+
+    <h3 class="sub-heading lang-zh">卡片分类与行为谱分析</h3>
+    <h3 class="sub-heading lang-en">Card Sorting &amp; Behavioral Spectrums</h3>
+
+    <p class="body-text lang-zh">我们通过卡片分类练习，将年度回顾的内容重新归入更符合用户直觉的概念分组。这揭示了原有设计在哪些地方将相关信息割裂开来，造成用户困惑。行为谱分析将参与者按"对金融术语的熟悉程度"和"主动/被动管理偏好"等维度进行标注，帮助我们理解设计需要覆盖的用户心智模型范围。</p>
+    <p class="body-text lang-en">We conducted card sorting exercises to reorganize Year-in-Review content into natural conceptual groupings. This revealed where the original flow separated related information in ways that confused users. Behavioral spectrum mapping plotted participants across axes like "Comfortable vs. Uncomfortable with Jargon" and "Hands-on vs. Hands-off Management" to understand the range of mental models we were designing for.</p>
+
+    <div class="two-img-row">
+      <div>
+        <img src="photos/card1.png" style="width:100%; border-radius:8px; display:block;">
+        <p class="img-caption lang-zh">卡片分类工作坊——将年度回顾内容重新归入自然分组</p>
+        <p class="img-caption lang-en">Card sorting session — reorganizing Year-in-Review content into natural groupings</p>
+      </div>
+      <div>
+        <img src="photos/card2.png" style="width:100%; border-radius:8px; display:block;">
+        <p class="img-caption lang-zh">行为谱分析——按金融流利度和账户管理维度标注用户分布</p>
+        <p class="img-caption lang-en">Behavioral spectrum mapping — plotting users across financial fluency and account management dimensions</p>
+      </div>
+    </div>
+
+    <h3 class="sub-heading lang-zh">关键发现</h3>
+    <h3 class="sub-heading lang-en">Key Findings</h3>
+
+    <div class="cards-2" style="margin-top: 12px;">
+      <div class="finding-card">
+        <div class="finding-num">01</div>
+        <div class="finding-title lang-zh">安心感优先于数据</div>
+        <div class="finding-title lang-en">Reassurance before data</div>
+        <div class="finding-body lang-zh">用户需要先看到一句平白的"你在正轨上"的判断，才愿意去解读图表和标签。</div>
+        <div class="finding-body lang-en">Users looked for a plain-language "Am I on track?" verdict before they were willing to interpret any charts or labels.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">02</div>
+        <div class="finding-title lang-zh">归因说明是最大缺口</div>
+        <div class="finding-title lang-en">Attribution was the missing piece</div>
+        <div class="finding-body lang-zh">参与者无法区分个人投入和市场涨跌的贡献——这引发了焦虑，也导致他们对成功或失败的原因产生误判。</div>
+        <div class="finding-body lang-en">Participants could not separate their personal contributions from market movement — which drove anxiety and misattribution of success or failure.</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">03</div>
+        <div class="finding-title lang-zh">结构改善了，决策支持仍不足</div>
+        <div class="finding-title lang-en">Structure improved, decision support didn't</div>
+        <div class="finding-body lang-zh">信息结构的测后评分集中在4–5分，而"对决策的帮助程度"评分则分布分散（1–5分均有）。</div>
+        <div class="finding-body lang-en">Post-test ratings for information structure clustered high (4–5/5), while "helpfulness in decision making" varied widely (1–5/5).</div>
+      </div>
+      <div class="finding-card">
+        <div class="finding-num">04</div>
+        <div class="finding-title lang-zh">无障碍需求真实存在</div>
+        <div class="finding-title lang-en">Accessibility needs are real, even for digitally capable users</div>
+        <div class="finding-body lang-zh">即便是自述技术使用流畅的用户，测前调查也显示了显著的无障碍需求——更大字号、更低信息密度、更高对比度。</div>
+        <div class="finding-body lang-en">Pre-test showed meaningful accessibility needs — larger text, lower density, higher contrast — even among users who described themselves as comfortable with technology.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 03 PERSONA & EMPATHY MAP ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">03 · 用户画像与同理心地图</div>
+    <div class="section-heading lang-en">03 · PERSONA &amp; EMPATHY MAP</div>
+
+    <h2 class="body-heading lang-zh">为"进度验证者"设计——最关键的情感摩擦点</h2>
+    <h2 class="body-heading lang-en">Designing for the Progress Validator — the most critical friction point</h2>
+
+    <p class="body-text lang-zh">我没有创建泛化的"平均用户"，而是聚焦于"进度验证者"原型——持续储蓄但因市场复杂性而对自身进展缺乏安全感的用户群体。这一细分群体代表了年度回顾体验的情感核心。</p>
+    <p class="body-text lang-en">Rather than creating a generic "average user," I focused on the Progress Validator archetype — users who are actively saving but feel insecure about their progress due to market complexity. This segment represents the emotional core of the Year-in-Review experience.</p>
+
+    <img src="photos/persona.png" style="width:100%; border-radius:8px; display:block;">
+    <p class="img-caption lang-zh">主要用户画像——Michael Brady，45岁，高级项目工程师。核心需求：来源归因清晰 + 进度确认。</p>
+    <p class="img-caption lang-en">Primary persona — Michael Brady, Senior Project Engineer, 45. Core need: attribution clarity and progress confirmation.</p>
+
+    <h3 class="sub-heading lang-zh">同理心地图</h3>
+    <h3 class="sub-heading lang-en">Empathy Map</h3>
+
+    <p class="body-text lang-zh">同理心地图是设计的转折点。它将设计重心从数据密集的仪表盘转向以安心感为先的界面——直接验证了"情境瀑布图"的必要性：通过可视化方式将个人投入与市场表现分离，即时回答用户最核心的问题。</p>
+    <p class="body-text lang-en">The empathy map was the turning point for the design. It shifted the focus from a data-heavy dashboard to a reassurance-first interface — directly validating the need for the Contextual Waterfall, which visually separates personal contributions from market performance to answer the user's core question instantly.</p>
+
+    <img src="photos/empathy%20map.png" style="width:100%; border-radius:8px; display:block;">
+    <p class="img-caption lang-zh">同理心地图——"这是我的功劳还是市场的功劳？"成为用户最主导的认知框架</p>
+    <p class="img-caption lang-en">Empathy map — "Was that growth me, or just the market?" surfaces as the user's dominant cognitive frame</p>
+
+    <div class="my-take">
+      <div class="my-take-label lang-zh">我的判断</div>
+      <div class="my-take-label lang-en">My take</div>
+      <p class="lang-zh">同理心地图练习揭示了可用性测试分数无法显示的东西：用户不是被数据搞糊涂了，而是在情感上被数据堵住了。一张显示"+2万美元"的余额图，如果你不知道这是自己挣来的还是市场给的，它带来的不是安心，而是焦虑。这个情感区分驱动了后续每一个设计决策。</p>
+      <p class="lang-en">The empathy map exercise revealed something the usability test scores couldn't: users weren't confused by the data — they were emotionally blocked by it. A balance chart that shows +$20k feels threatening, not reassuring, if you don't know whether you earned it or the market handed it to you. That emotional distinction drove every subsequent design decision.</p>
+    </div>
+  </section>
+
+  <!-- ── 04 DESIGN DECISIONS ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">04 · 核心设计决策</div>
+    <div class="section-heading lang-en">04 · DESIGN DECISIONS</div>
+
+    <h2 class="body-heading lang-zh">三个改变金融数据情感体验的设计决策</h2>
+    <h2 class="body-heading lang-en">Three decisions that changed the emotional experience of financial data</h2>
+
+    <!-- Decision 1 -->
+    <div class="decision-block">
+      <div class="decision-tag lang-zh">决策 01</div>
+      <div class="decision-tag lang-en">DECISION 01</div>
+      <h3 class="decision-title lang-zh">将入口提至首屏——不再让最重要的功能藏在页面底部</h3>
+      <h3 class="decision-title lang-en">Surface the entry point — stop burying the year's most important feature</h3>
+
+      <div class="ba-grid">
+        <div>
+          <div class="ba-label lang-zh">改版前</div>
+          <div class="ba-label lang-en">Before</div>
+          <img src="photos/Old1.png" style="width:100%; border-radius:8px; display:block;">
+          <p class="img-caption lang-zh">年度回顾入口藏于页面底部，用户需滚动跳过投资预测图才能找到</p>
+          <p class="img-caption lang-en">Year in Review buried below the fold — users had to scroll past investment projections to find it</p>
+        </div>
+        <div>
+          <div class="ba-label lang-zh">改版后</div>
+          <div class="ba-label lang-en">After</div>
+          <img src="photos/New1.png" style="width:100%; border-radius:8px; display:block;">
+          <p class="img-caption lang-zh">页面顶部显著 banner——即时可见，单一明确的行动指引</p>
+          <p class="img-caption lang-en">Prominent banner at top of page — immediate visibility, single clear CTA</p>
+        </div>
+      </div>
+
+      <div class="change-heading lang-zh">改了什么</div>
+      <div class="change-heading lang-en">What I Changed</div>
+      <ul class="bullet-list lang-zh">
+        <li>将年度回顾 banner 和主要行动按钮移至首屏</li>
+        <li>压缩 hero 区域，使目的和下一步操作在一屏内完整呈现</li>
+        <li>简化行动层级：突出一个主要操作，弱化次要操作</li>
+      </ul>
+      <ul class="bullet-list lang-en">
+        <li>Moved Year-in-Review banner and primary CTA above the fold</li>
+        <li>Compressed hero area so purpose + next action fits in one screen</li>
+        <li>Simplified CTA hierarchy: one primary action, secondary actions de-emphasized</li>
+      </ul>
+
+      <div class="why-heading lang-zh">为什么重要</div>
+      <div class="why-heading lang-en">Why It Matters</div>
+      <p class="body-text lang-zh">用户可以立即看到从哪里开始——消除了"我从哪里开始？"的摩擦，这一问题曾导致40%的测试参与者在第一次浏览时完全错过该功能。</p>
+      <p class="body-text lang-en">Users can immediately see where to start — eliminating the "Where do I begin?" friction that caused 40% of test participants to miss the feature entirely on first view.</p>
+    </div>
+
+    <!-- Decision 2 -->
+    <div class="decision-block">
+      <div class="decision-tag lang-zh">决策 02</div>
+      <div class="decision-tag lang-en">DECISION 02</div>
+      <h3 class="decision-title lang-zh">将8个独立页面整合为单页叙事滚动——碎片化会摧毁理解</h3>
+      <h3 class="decision-title lang-en">Consolidate 8 pages into one narrative scroll — because fragmentation destroys comprehension</h3>
+
+      <div class="ba-grid">
+        <div>
+          <div class="ba-label lang-zh">改版前</div>
+          <div class="ba-label lang-en">Before</div>
+          <img src="photos/old2.png" style="width:100%; border-radius:8px; display:block;">
+          <p class="img-caption lang-zh">11个需要来回跳转的独立页面——每次点击都丢失上下文</p>
+          <p class="img-caption lang-en">11 pages users had to navigate between — context lost with every click</p>
+        </div>
+        <div>
+          <div class="ba-label lang-zh">改版后</div>
+          <div class="ba-label lang-en">After</div>
+          <img src="photos/new3.png" style="width:100%; border-radius:8px; display:block;">
+          <p class="img-caption lang-zh">单页叙事长滚动 + 悬浮导航栏——用户随时知道自己在哪里</p>
+          <p class="img-caption lang-en">Single narrative scroll with sticky navigation bar — users always know where they are</p>
+        </div>
+      </div>
+
+      <div class="change-heading lang-zh">改了什么</div>
+      <div class="change-heading lang-en">What I Changed</div>
+      <ul class="bullet-list lang-zh">
+        <li>将多页向导式结构替换为单页长滚动</li>
+        <li>将内容重组为清晰标注的模块（概览、表现、策略、下一步）</li>
+        <li>加入带区块锚点的悬浮导航，支持快速跳转</li>
+        <li>滚动时高亮显示当前所在区块</li>
+      </ul>
+      <ul class="bullet-list lang-en">
+        <li>Replaced multi-page wizard with a single long-scroll page</li>
+        <li>Restructured content into clearly labeled sections (Overview, Performance, Strategy, Next Steps)</li>
+        <li>Added sticky navigation with section anchors for fast jumping</li>
+        <li>Made current section visible and highlighted while scrolling</li>
+      </ul>
+
+      <h3 class="sub-heading lang-zh">用户流程设计</h3>
+      <h3 class="sub-heading lang-en">User Flow Design</h3>
+
+      <p class="body-text lang-zh">在设计单页长滚动布局之前，我从两个层次完整梳理了用户旅程——总体线性流程图展示从入口到行动的叙事顺序，详细流程图则捕捉每个内容模块内部的分支逻辑和决策节点。</p>
+      <p class="body-text lang-en">Before designing the single-scroll layout, I mapped the complete user journey at two levels of detail — an overall linear flow showing the narrative sequence from entry to action, and a detailed section-by-section flow capturing the branching logic and decision points within each content block.</p>
+
+      <img src="photos/overall%20workflow.png" style="width:100%; border-radius:8px; display:block;">
+      <p class="img-caption lang-zh">总体流程——线性叙事顺序：主页 → 年度回顾入口 → 落地页 → 增长驱动 → 资产配置 → 风险 → 计划执行 → 投入分析 → 顾问建议 → 下一步行动</p>
+      <p class="img-caption lang-en">Overall flow — linear narrative sequence: Main page → Year in Review entry → Landing → Growth Drivers → Asset Mix → Risk → Plan Adherence → Contribution Analysis → DA's advice → Next steps</p>
+
+      <img src="photos/detail%20workflow.png" style="width:100%; border-radius:8px; display:block;">
+      <p class="img-caption lang-zh">详细流程——9个模块的交互地图，展示每个内容块内部的分支逻辑、决策节点和条件路径</p>
+      <p class="img-caption lang-en">Detailed flow — 9-section interaction map showing branching logic, decision points, and conditional paths within each content block</p>
+
+      <div class="why-heading lang-zh">为什么重要</div>
+      <div class="why-heading lang-en">Why It Matters</div>
+      <p class="body-text lang-zh">用户直接告诉我们——翻到第5页时，他们已经忘记第1页建立的上下文。线性滚动保留了叙事连贯性，降低了拼凑碎片化信息的认知成本。</p>
+      <p class="body-text lang-en">Users told us directly — by the time they reached page 5, they had lost the thread of what page 1 established. The linear scroll preserves narrative continuity and reduces the cognitive cost of piecing together a fragmented story.</p>
+    </div>
+
+    <!-- Decision 3 -->
+    <div class="decision-block">
+      <div class="decision-tag lang-zh">决策 03</div>
+      <div class="decision-tag lang-en">DECISION 03</div>
+      <h3 class="decision-title lang-zh">情境瀑布图——分清"你做了什么"和"市场做了什么"</h3>
+      <h3 class="decision-title lang-en">The Contextual Waterfall — separating what you did from what the market did</h3>
+
+      <div class="ba-grid">
+        <div>
+          <div class="ba-label lang-zh">改版前</div>
+          <div class="ba-label lang-en">Before</div>
+          <img src="photos/waterfall%20old.png" style="width:100%; border-radius:8px; display:block;">
+          <p class="img-caption lang-zh">简单的期初/期末对比——即便表现良好，这张图也可能看起来像是在亏损</p>
+          <p class="img-caption lang-en">Simple start vs. end comparison — a chart that can look like a loss even when you're winning</p>
+        </div>
+        <div>
+          <div class="ba-label lang-zh">改版后</div>
+          <div class="ba-label lang-en">After</div>
+          <img src="photos/waterfall%20new.png" style="width:100%; border-radius:8px; display:block;">
+          <p class="img-caption lang-zh">情境瀑布图——个人投入、市场收益、提款金额分别独立显示</p>
+          <p class="img-caption lang-en">Contextual Waterfall — Contributions, Market Gains, and Withdrawals shown as separate drivers</p>
+        </div>
+      </div>
+
+      <div class="change-heading lang-zh">改了什么</div>
+      <div class="change-heading lang-en">What I Changed</div>
+      <ul class="bullet-list lang-zh">
+        <li>将期初/期末柱状图替换为分别展示各驱动因素的瀑布图</li>
+        <li>将提款与市场收益分开显示，使支出不再在视觉上呈现为"亏损"</li>
+        <li>添加平白语言标签和"一句话要点"引导用户解读</li>
+      </ul>
+      <ul class="bullet-list lang-en">
+        <li>Replaced start-vs-end bar chart with a waterfall chart showing each driver separately</li>
+        <li>Separated withdrawals from market gains so spending doesn't visually appear as "loss"</li>
+        <li>Added plain-language labels and a Takeaway line to guide interpretation</li>
+      </ul>
+
+      <div class="why-heading lang-zh">为什么重要</div>
+      <div class="why-heading lang-en">Why It Matters</div>
+      <p class="body-text lang-zh">一个提取了4万美元用于退休生活、同时账户仍在增值的用户，本是一个成功的故事——但原版图表让它看起来像亏损。这是整个项目中情感影响最大的单一设计修复。</p>
+      <p class="body-text lang-en">A user who withdrew $40k to fund their retirement lifestyle and still grew their portfolio is a success story — but the original chart made it look like a loss. This was the single most emotionally consequential design fix in the project.</p>
+
+      <div class="my-take">
+        <div class="my-take-label lang-zh">我的判断</div>
+        <div class="my-take-label lang-en">My take</div>
+        <p class="lang-zh">这个洞察不是来自设计直觉，而是来自亲眼看着一位68岁的参与者盯着一张显示余额下降的图表，说出"我一定是哪里做错了"——而事实上她成功支撑了两年的退休提款，同时账户依然在增值。数据呈现方式不是视觉细节，而是一种设计的伦理责任。</p>
+        <p class="lang-en">This insight didn't come from design intuition — it came directly from watching a 68-year-old participant stare at a chart showing her balance went down and say "I must have done something wrong," when in fact she had successfully funded two years of retirement withdrawals while her portfolio still grew. Data framing is not a visual detail. It's an ethical responsibility.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── 05 PROTOTYPE ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">05 · 最终原型</div>
+    <div class="section-heading lang-en">05 · PROTOTYPE</div>
+
+    <h2 class="body-heading lang-zh">从研究到高保真——以安心感为核心的年度回顾</h2>
+    <h2 class="body-heading lang-en">From Research to High-Fidelity — a reassurance-first Year-in-Review</h2>
+
+    <p class="body-text lang-zh">最终原型覆盖了完整的用户旅程：入口 → 判断结论 → 来源归因 → 参照背景 → 下一步行动。设计系统采用米色背景（减少老年用户的视觉疲劳）、衬线展示字体（建立信任感和权威感），以及 Lexend 字体用于所有数字展示（专为可读性优化的无障碍字体）。</p>
+    <p class="body-text lang-en">The final prototype covers the complete user journey: entry point → verdict → attribution → context → next steps. The design system uses cream backgrounds (reducing glare for older eyes), serif display fonts (trust and authority), and Lexend for all numerical data (an accessibility-first typeface optimized for legibility).</p>
+
+    <div style="width:100%; border-radius:12px; overflow:hidden; border: 0.5px solid var(--border); margin: 24px 0;">
+      <video
+        width="100%"
+        controls
+        autoplay
+        muted
+        loop
+        style="display:block; border-radius:12px;">
+        <source src="photos/video.mp4.mov" type="video/mp4">
+      </video>
+    </div>
+    <p style="font-size:12px; color:var(--ink3); text-align:center; margin-top:8px; font-style:italic;">
+      Prototype walkthrough · 原型演示视频
+    </p>
+
+    <div class="figma-btn-wrap">
+      <a class="figma-btn" href="https://www.figma.com/proto/gmID2R6dcislQtyIYj7lPG/Untitled?node-id=6-86&viewport=-1098%2C1273%2C0.42&t=IGynOAVx1RPd1gJW-1&scaling=scale-down&content-scaling=fixed&starting-point-node-id=6%3A86&page-id=0%3A1" target="_blank">
+        <span class="lang-zh">在 Figma 中查看完整原型 →</span>
+        <span class="lang-en">View full prototype in Figma →</span>
+      </a>
+    </div>
+    <p class="figma-note lang-zh">已于2025年12月向 Vanguard 资深UX设计师展示</p>
+    <p class="figma-note lang-en">Presented to Vanguard Senior UX Designers, Dec 2025</p>
+  </section>
+
+  <!-- ── 06 FINAL THOUGHTS ── -->
+  <section class="section">
+    <div class="section-heading lang-zh">06 · 个人反思</div>
+    <div class="section-heading lang-en">06 · FINAL THOUGHTS</div>
+
+    <h2 class="body-heading lang-zh">这个项目改变了我对设计的三种认知</h2>
+    <h2 class="body-heading lang-en">Three things this project changed about how I think about design</h2>
+
+    <p class="body-text lang-zh">做这个项目之前，我认为好的UX就是让信息更清晰、更易扫读。经历这次重设计之后，我意识到更大的责任在于帮助人们理解他们所看到的东西。在金融领域，用户不只是在阅读数字——他们在试图理解自己的选择、自己的进展，以及自己应该感到担忧还是放心。设计可以让他们安心，也可能在无意中制造疑虑。</p>
+    <p class="body-text lang-en">Before this project, I often thought strong UX meant making information cleaner and easier to scan. After working through this redesign, I realized the bigger responsibility is helping people make sense of what they see. In finance, users are not just reading numbers. They are trying to understand their own choices, their progress, and whether they should feel worried or reassured. The design can either steady them or unintentionally create doubt.</p>
+
+    <p class="body-text lang-zh">为50岁以上的投资者设计也提醒我，用户并不存在一个"平均"的专业水平。有些人想要一个简洁、可信的快速摘要；另一些人想要更深入的细节，但只在他们主动选择的时候。这促使我更专注于流程和结构。我希望这个体验像一个有清晰引导的故事，而不是一组需要用户自己拼凑起来的独立页面。</p>
+    <p class="body-text lang-en">Designing for 50+ investors also reminded me that users do not come in one "average" level of expertise. Some want a quick summary that feels calm and trustworthy. Others want deeper details, but only when they choose to go there. That pushed me to focus on flow and structure. I wanted the experience to feel like a guided story with clear orientation, not a set of disconnected pages that users have to piece together on their own.</p>
+
+    <p class="body-text lang-zh">有一个时刻让我印象深刻：我意识到一张图表多么容易传递错误的信息。一个简单的期初/期末对比，在涉及提款的情况下可能看起来像亏损，即便用户实际上成功支撑了自己的生活，同时账户仍在增值。这个洞察让我在数据呈现上更加谨慎。我现在将数据可视化视为情感体验的一部分，而不仅仅是分析工具。</p>
+    <p class="body-text lang-en">One moment that stayed with me was realizing how easily a chart can send the wrong message. A simple start versus end comparison can look like a loss when withdrawals are involved, even if the user successfully funded their life and still grew their portfolio. That insight made me more careful about data framing. I now see data visualization as part of the emotional experience, not just the analytical one.</p>
+
+    <div style="margin-top: 48px; padding-top: 40px; border-top: 0.5px solid var(--border); display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;">
+      <div>
+        <p style="font-size:11px; letter-spacing:0.12em; text-transform:uppercase; color:var(--ink3); margin-bottom:16px; font-family:var(--sans-zh);">Gratitude</p>
+        <p style="font-size:14px; color:var(--ink2); line-height:1.8; font-family:var(--sans-zh);">I am deeply thankful to Professor Ruel, everyone in MEJO 581, and our participants for the support and honest feedback throughout this process. The critique kept me grounded in user behavior and decision-making, not just visual polish. I am also grateful to Vanguard for the inspiration and the opportunity to work on the Year in Review project.</p>
+      </div>
+      <div>
+        <img src="photos/team.png" style="width:100%; border-radius:12px; display:block;">
+      </div>
+    </div>
+
+    <div style="margin-top: 48px;">
+      <a class="next-card" href="index.html">
+        <div>
+          <div class="next-card-label lang-zh">返回作品集</div>
+          <div class="next-card-label lang-en">Back to portfolio</div>
+          <div class="next-card-title lang-zh">Kimberly Shao — 所有项目</div>
+          <div class="next-card-title lang-en">Kimberly Shao — All Projects</div>
+        </div>
+        <div class="next-card-arrow">←</div>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  function setLang(lang) {
+    document.body.className = lang;
+    document.getElementById('btn-zh').classList.toggle('active', lang === 'zh');
+    document.getElementById('btn-en').classList.toggle('active', lang === 'en');
+    history.replaceState(null, '', '?lang=' + lang);
+  }
+
+  (function init() {
+    const params = new URLSearchParams(window.location.search);
+    const lang = params.get('lang');
+    if (lang === 'en' || lang === 'zh') {
+      setLang(lang);
+    } else {
+      setLang('en');
+    }
+  })();
+</script>
+</body>
+</html>
