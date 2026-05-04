@@ -646,14 +646,52 @@
         <button class="filter-btn" data-tag="Data-Driven" onclick="filterProjects('Data-Driven')">Data-Driven</button>
       </div>
 
-      <!-- Project 1: LLM Mental Health -->
+      <!-- Project 1: ClubMatch -->
+      <div class="project-card" data-tags="AI Product,UX Research">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="lang-en">ClubMatch · AI-Powered Campus Club Matching Platform</span>
+            <span class="lang-zh">ClubMatch · AI驱动的校园社团智能匹配平台</span>
+          </div>
+          <div class="card-date">2026.04 – 2026.05</div>
+        </div>
+        <div class="card-role lang-en">Product Designer & Developer · UNC Chapel Hill Course Project</div>
+        <div class="card-role lang-zh">产品设计与开发 · 北卡罗来纳大学课程项目</div>
+        <div class="tag-row">
+          <span class="tag-badge AI-Product" onclick="filterProjects('AI Product')">AI Product</span>
+          <span class="tag-badge UX-Research" onclick="filterProjects('UX Research')">UX Research</span>
+        </div>
+        <div class="tech-row">
+          <span class="tech-pill">Next.js</span>
+          <span class="tech-pill">GPT-4 API</span>
+          <span class="tech-pill">Vercel</span>
+          <span class="tech-pill">Bilingual Design</span>
+          <span class="tech-pill">Dual-portal Architecture</span>
+        </div>
+        <ul class="card-bullets lang-en">
+          <li>Identified core pain point: students face information overload and biased one-sided club profiles when choosing campus organizations; designed a dual-portal solution with AI matching + authentic peer reviews</li>
+          <li>Architected student-facing quiz flow (AI-generated compatibility scores) and club-facing management dashboard (application pipeline, engagement analytics, AI-assisted profile writing) — <span class="metric">52</span> clubs, <span class="metric">3,800+</span> users, <span class="metric">91%</span> match satisfaction</li>
+          <li>Built and deployed full-stack bilingual (EN/ZH) platform on Vercel; owned the complete product lifecycle from user research and PRD to hi-fi prototype and production launch</li>
+        </ul>
+        <ul class="card-bullets lang-zh">
+          <li>识别核心痛点：学生面临社团信息过载且来源单一有偏见的问题；设计双端解决方案，结合 AI 匹配与真实成员评价，还原社团全貌</li>
+          <li>设计学生端 AI 测评匹配流程与社团端管理后台（招新管道、数据看板、AI辅助简介生成），平台入驻社团 <span class="metric">52</span> 个，在校用户 <span class="metric">3,800+</span>，匹配满意率 <span class="metric">91%</span></li>
+          <li>独立完成中英双语全栈平台开发并部署至 Vercel，主导从用户研究、PRD 撰写到高保真原型与生产上线的完整产品周期</li>
+        </ul>
+        <div style="margin-top:14px; display:flex; gap:16px; flex-wrap:wrap;">
+          <a class="lang-en" href="https://clubsmatch.netlify.app/" target="_blank" rel="noopener" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">View Live Product →</a>
+          <a class="lang-zh" href="https://clubsmatch.netlify.app/" target="_blank" rel="noopener" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">查看线上产品 →</a>
+        </div>
+      </div>
+
+      <!-- Project 2: LLM Mental Health -->
       <div class="project-card" data-tags="AIGC,AI Product">
         <div class="card-header">
           <div class="card-title">
             <span class="lang-en">LLM-based Conversational AI Mental Health System</span>
             <span class="lang-zh">基于LLM的对话式AI心理干预系统</span>
           </div>
-          <div class="card-date">2025.10 – Present</div>
+          <div class="card-date">2025.10 – 2026.05</div>
         </div>
         <div class="card-role lang-en">Product Strategy Lead · UNC NiCE Lab</div>
         <div class="card-role lang-zh">产品策略负责人 · UNC NiCE Lab</div>
@@ -679,7 +717,40 @@
         </ul>
       </div>
 
-      <!-- Project 2: TAE -->
+      <!-- Project 3: Vanguard -->
+      <div class="project-card" data-tags="UX Research">
+        <div class="card-header">
+          <div class="card-title">
+            <span class="lang-en">Vanguard Annual Review Interface Redesign</span>
+            <span class="lang-zh">Vanguard年度回顾界面重设计</span>
+          </div>
+          <div class="card-date">2025.08 – 2025.12</div>
+        </div>
+        <div class="card-role lang-en">UX/UI Designer · UNC Chapel Hill</div>
+        <div class="card-role lang-zh">UX/UI设计师 · 北卡罗来纳大学</div>
+        <div class="tag-row">
+          <span class="tag-badge UX-Research" onclick="filterProjects('UX Research')">UX Research</span>
+        </div>
+        <div class="tech-row">
+          <span class="tech-pill">Figma</span>
+          <span class="tech-pill">Usability Testing</span>
+          <span class="tech-pill">Card Sorting</span>
+        </div>
+        <ul class="card-bullets lang-en">
+          <li>Conducted usability tests and interviews with <span class="metric">20</span> users (50+); created personas and empathy maps; restructured IA to align with decision journeys</li>
+          <li>Delivered <span class="metric">15+</span> hi-fi prototype screens in Figma; presented to Vanguard senior UX designers and iterated based on feedback</li>
+        </ul>
+        <ul class="card-bullets lang-zh">
+          <li>访谈50岁以上用户 <span class="metric">20</span> 人，创建角色画像与同理心地图，重构信息架构使结构与用户决策旅程对齐</li>
+          <li>输出高保真原型 <span class="metric">15</span> 页以上，向Vanguard资深UX设计师展示并完成迭代优化</li>
+        </ul>
+        <div style="margin-top:14px">
+          <a class="lang-en" href="vanguard.html?lang=en" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">View Project →</a>
+          <a class="lang-zh" href="vanguard.html?lang=zh" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">查看项目详情 →</a>
+        </div>
+      </div>
+
+      <!-- Project 4: TAE -->
       <div class="project-card" data-tags="AI Product,UX Research">
         <div class="card-header">
           <div class="card-title">
@@ -715,39 +786,6 @@
         <div style="margin-top:14px">
           <a class="lang-en" href="tae.html?lang=en" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">View Project →</a>
           <a class="lang-zh" href="tae.html?lang=zh" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">查看项目详情 →</a>
-        </div>
-      </div>
-
-      <!-- Project 3: Vanguard -->
-      <div class="project-card" data-tags="UX Research">
-        <div class="card-header">
-          <div class="card-title">
-            <span class="lang-en">Vanguard Annual Review Interface Redesign</span>
-            <span class="lang-zh">Vanguard年度回顾界面重设计</span>
-          </div>
-          <div class="card-date">2025.08 – 2025.12</div>
-        </div>
-        <div class="card-role lang-en">UX/UI Designer · UNC Chapel Hill</div>
-        <div class="card-role lang-zh">UX/UI设计师 · 北卡罗来纳大学</div>
-        <div class="tag-row">
-          <span class="tag-badge UX-Research" onclick="filterProjects('UX Research')">UX Research</span>
-        </div>
-        <div class="tech-row">
-          <span class="tech-pill">Figma</span>
-          <span class="tech-pill">Usability Testing</span>
-          <span class="tech-pill">Card Sorting</span>
-        </div>
-        <ul class="card-bullets lang-en">
-          <li>Conducted usability tests and interviews with <span class="metric">20</span> users (50+); created personas and empathy maps; restructured IA to align with decision journeys</li>
-          <li>Delivered <span class="metric">15+</span> hi-fi prototype screens in Figma; presented to Vanguard senior UX designers and iterated based on feedback</li>
-        </ul>
-        <ul class="card-bullets lang-zh">
-          <li>访谈50岁以上用户 <span class="metric">20</span> 人，创建角色画像与同理心地图，重构信息架构使结构与用户决策旅程对齐</li>
-          <li>输出高保真原型 <span class="metric">15</span> 页以上，向Vanguard资深UX设计师展示并完成迭代优化</li>
-        </ul>
-        <div style="margin-top:14px">
-          <a class="lang-en" href="vanguard.html?lang=en" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">View Project →</a>
-          <a class="lang-zh" href="vanguard.html?lang=zh" style="font-size:13px; color:var(--muted); text-decoration:none; border-bottom:1px solid var(--border); padding-bottom:1px; transition:color 0.15s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">查看项目详情 →</a>
         </div>
       </div>
 
